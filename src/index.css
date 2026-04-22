@@ -1,160 +1,120 @@
 * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
 }
 
+/* App.css */
 body {
-    height: 100vh;
-    width: 100%;
-    background-color: #EDE9E6;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: "Ubuntu", sans-serif;
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #0f0f0f;
+  color: white;
 }
 
 .container {
-    display: flex;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    border-radius: 40px;
-    overflow: hidden; /* Keeps the rounded corners clean */
+  min-height: 100vh;
+  padding: 20px;
 }
 
-.weather-layout {
-    width: 350px;
-    height: 500px;
-    background-color: #ffffff;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 40px 20px;
+.top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 40px;
 }
 
-.search-box {
-    display: flex;
-    align-items: center;
+h1 {
+  font-size: 2.5rem;
+  color: #e50914; /* Netflix Red */
+  text-transform: uppercase;
+  letter-spacing: 2px;
 }
 
-.weather-layout input {
-    height: 35px;
-    width: 180px;
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
-    padding: 0 15px;
-    background-color: #E8E2D8;
-    border: none;
-    outline: none;
+.search-input {
+  width: 100%;
+  max-width: 500px;
+  padding: 12px 20px;
+  border-radius: 25px;
+  border: none;
+  background: #333;
+  color: white;
+  font-size: 16px;
+  outline: none;
+  transition: 0.3s;
 }
 
-.weather-layout button {
-    height: 35px;
-    width: 45px;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
-    background-color: #E8E2D8;
-    color: #5faceb;
-    border: none;
-    cursor: pointer;
+.search-input:focus {
+  background: #444;
+  box-shadow: 0 0 10px rgba(229, 9, 20, 0.5);
 }
 
-.weather-temp {
-    font-size: 60px;
-    margin: 10px 0;
+/* Video Section */
+.video-theater {
+  position: relative;
+  background: #000;
+  margin-bottom: 30px;
+  border-radius: 12px;
+  overflow: hidden;
 }
 
-.weather-city {
-    font-size: 20px;
-    color: #696969;
-    margin-bottom: 10px;
+.close-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: #e50914;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  z-index: 10;
 }
 
-.weather-info {
-    list-style: none;
-    color: #888;
-    font-size: 16px;
-    margin: 2px 0;
+/* Popular Row (Horizontal Scroll) */
+.popular-row {
+  display: flex;
+  overflow-x: auto;
+  gap: 20px;
+  padding: 20px 0;
+  scrollbar-width: none; /* Firefox */
 }
 
-.weather-Extra {
-    width: 450px;
-    height: 500px;
-    background-color: #E8E2D8;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 40px;
+.popular-row::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
 }
 
-.container2 {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    margin-top: 30px;
+/* Movie Card Styling */
+.movie-card {
+  flex-shrink: 0;
+  width: 160px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
 }
 
-.container2 div {
-    background-color: #5faceb;
-    color: white;
-    padding: 20px;
-    border-radius: 20px;
-    text-align: center;
+.movie-card img {
+  width: 100%;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.5);
 }
 
-.container2 div span {
-    font-size: 12px;
-    text-transform: uppercase;
-    opacity: 0.8;
+.movie-card:hover {
+  transform: scale(1.1);
+  z-index: 2;
 }
 
-.container2 div p {
-    font-size: 18px;
-    font-weight: bold;
-    margin-top: 5px;
-}
-/* --- RESPONSIVE DESIGN --- */
-
-/* For Tablets and smaller laptops (under 900px) */
-@media (max-width: 900px) {
-    body {
-        height: auto; /* Allow scrolling if content is taller than screen */
-        padding: 20px 0;
-    }
-
-    .container {
-        flex-direction: column; /* Stack the white box on top of the tan box */
-        width: 90%; 
-        max-width: 450px; /* Keep it from getting too wide */
-        height: auto;
-    }
-
-    .weather-layout, .weather-Extra {
-        width: 100%; /* Make both parts take full width of container */
-        height: auto;
-        border-radius: 0; /* Optional: flatten corners where they meet */
-    }
-
-    .weather-layout {
-        padding: 30px;
-    }
-
-    .weather-Extra {
-        padding: 30px;
-    }
+.movie-card h4, .movie-card p {
+  font-size: 0.9rem;
+  margin-top: 10px;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-/* For Mobile Phones (under 480px) */
-@media (max-width: 480px) {
-    .container2 {
-        grid-template-columns: 1fr; /* Stack the 4 info boxes in a single column */
-        gap: 10px;
-    }
-
-    .weather-temp {
-        font-size: 45px; /* Shrink text slightly for small screens */
-    }
-
-    .weather-layout input {
-        width: 140px; /* Make input smaller to fit next to button */
-    }
+/* Main Grid */
+.main-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 25px;
+  margin-top: 20px;
 }

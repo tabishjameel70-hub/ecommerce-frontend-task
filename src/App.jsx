@@ -1,111 +1,112 @@
-import React, { useEffect, useState } from 'react';
-
-const API_KEY = 'ec48888312712eacfd3d4980ce689a53';
+import React, { useEffect, useState, useRef } from 'react';
+import './App.css'; // Import your new CSS file
 
 const App = () => {
-    const [input, setInput] = useState('London'); // Default city
-    const [data, setData] = useState(null);
-    const [error, setError] = useState(null);
+  const [Input, setInput] = useState('');
+  const [allData, setAllData] = useState(null);
+  const [popularData, setPopularData] = useState(null);
+  const [selectedVideo, setSelectedVideo] = useState(null);
+  const playerRef = useRef(null);
 
-    const fetchData = async () => {
-        if (!input) return;
-        try {
-            const API = `https://api.openweathermap.org/data/2.5/weather?q=${input}&units=metric&appid=${API_KEY}`;
-            const response = await fetch(API);
-            const result = await response.json();
-            
-            if (!response.ok) {
-                throw new Error(result.message || "City not found");
-            }
-            
-            setData(result);
-            setError(null);
-        } catch (error) {
-            setData(null);
-            setError(error.message);
-        }
-    };
+  const API_KEY = "2ab07db4a3ffe6cb4c6684cbfbd2598e";
 
-    // Fetch default city on mount
-    useEffect(() => {
-        fetchData();
-    }, []);
+  const fetchMovies = async () => {
+    const url = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}`;
+    const res = await fetch(url);
+    const result = await res.json();
+    setAllData(result);
+  };
 
-    const getWeatherIcon = (iconCode) => `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
+  const fetchPopularMovies = async () => {
+    const url = `https://api.themoviedb.org/3/trending/movie/day?api_key=${API_KEY}`;
+    const res = await fetch(url);
+    const result = await res.json();
+    setPopularData(result);
+  };
 
-    const formatDateTime = (dt) => {
-        const date = new Date(dt * 1000);
-        return {
-            day: date.toLocaleDateString('en-US', { weekday: 'long' }),
-            date: date.toLocaleDateString('en-US', { day: 'numeric', month: 'long' }),
-            time: date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
-        };
-    };
+  const handlePlay = async (id) => {
+    try {
+      const res = await fetch(`https://api.themoviedb.org/3/movie/${id}/videos?api_key=${API_KEY}`);
+      const data = await res.json();
+      const trailer = data.results.find(vid => vid.type === "Trailer" && vid.site === "YouTube");
+      
+      if (trailer) {
+        setSelectedVideo(trailer.key);
+        playerRef.current?.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        alert("Trailer not available.");
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
-    return (
-        <div className='container'>
-            <div className='weather-layout'>
-                <div className="search-box">
-                    <input 
-                        type="text" 
-                        placeholder='Enter city...' 
-                        value={input} 
-                        onChange={(e) => setInput(e.target.value)} 
-                        onKeyDown={(e) => e.key === 'Enter' && fetchData()}
-                    />
-                    <button onClick={fetchData}>
-                        <i className="fa-solid fa-magnifying-glass"></i>
-                    </button>
+  useEffect(() => {
+    fetchMovies();
+    fetchPopularMovies();
+  }, []);
+
+  const filtersearch = allData?.results?.filter((Fmovie) => {
+    return Fmovie.title.toLowerCase().includes(Input.toLowerCase());
+  }) || [];
+
+  return (
+    <div className='container'>
+      <div className="top">
+        <h1>MovieBox</h1>
+        <input 
+          className="search-input"
+          type="text" 
+          placeholder="Search for a movie..."
+          value={Input} 
+          onChange={(e) => setInput(e.target.value)} 
+        />
+      </div>
+
+      <div ref={playerRef}>
+        {selectedVideo && (
+          <div className="video-theater">
+            <button className="close-btn" onClick={() => setSelectedVideo(null)}>Close X</button>
+            <iframe
+              width="100%"
+              height="500px"
+              src={`https://www.youtube.com/embed/${selectedVideo}?autoplay=1`}
+              title="Trailer"
+              frameBorder="0"
+              allow="autoplay; encrypted-media"
+              allowFullScreen
+            ></iframe>
+          </div>
+        )}
+      </div>
+
+      <div className="data-container">
+        {!Input && (
+          <>
+            <h2>Trending Now</h2>
+            <div className="popular-row">
+              {popularData?.results?.map((Pmovie) => (
+                <div className="movie-card" key={Pmovie.id} onClick={() => handlePlay(Pmovie.id)}>
+                  <img src={`https://image.tmdb.org/t/p/w500${Pmovie.poster_path}`} alt={Pmovie.title} />
+                  <p>{Pmovie.title}</p>
                 </div>
-
-                {error && <p style={{color: 'red', marginTop: '10px'}}>{error}</p>}
-
-                {data && (
-                    <div className='weather-data'>
-                        <img 
-                            className='weather-icon' 
-                            src={getWeatherIcon(data.weather[0].icon)} 
-                            alt={data.weather[0].description} 
-                        />
-                        <h1 className='weather-temp'>{Math.round(data.main.temp)}°C</h1>
-                        <p className='weather-city'>{data.name}</p>
-                        <li className='weather-info'>{formatDateTime(data.dt).date}</li>
-                        <li className='weather-info'>
-                            {formatDateTime(data.dt).day}: <span>{formatDateTime(data.dt).time}</span>
-                        </li>
-                    </div>
-                )}
+              ))}
             </div>
+          </>
+        )}
 
-            <div className="weather-Extra">
-                {data ? (
-                    <>
-                        <h1>Today</h1>
-                        <div className='container2'>
-                            <div>
-                                <span>Wind</span>
-                                <p>{data.wind.speed} m/s</p>
-                            </div>
-                            <div>
-                                <span>Humidity</span>
-                                <p>{data.main.humidity}%</p>
-                            </div>
-                            <div>
-                                <span>Sunrise</span>
-                                <p>{new Date(data.sys.sunrise * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
-                            </div>
-                            <div>
-                                <span>Sunset</span>
-                                <p>{new Date(data.sys.sunset * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
-                            </div>
-                        </div>
-                    </>
-                ) : (
-                    <p>Search for a city to see details</p>
-                )}
+        <h2>{Input ? `Results for "${Input}"` : "Discover"}</h2>
+        <div className="main-grid">
+          {(Input ? filtersearch : allData?.results)?.map((movie) => (
+            <div className="movie-card" key={movie.id} onClick={() => handlePlay(movie.id)}>
+              <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt={movie.title} />
+              <h4>{movie.title}</h4>
             </div>
+          ))}
         </div>
-    );
-}
+      </div>
+    </div>
+  );
+};
 
-export default App; 
+export default App;
