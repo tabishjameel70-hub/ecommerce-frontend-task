@@ -12,9 +12,12 @@ const App = () => {
     const [home, sethome] = useState(null);
     const [kitcehb, setkitcehb] = useState(null);
     const [allData, setallData] = useState(null);
+    const [TechData, setTechData] = useState(null);
+
     const Allproducts = async () => {
         if (input === '') {
             alert("please enter somthing in the field");
+            return;
         }
         try {
             const response = await fetch(`https://fakestoreapi.com/products`);
@@ -55,18 +58,45 @@ const App = () => {
         setkitcehb(result.products);
         setError(false);
     }
+    const ConsumerElectronics = async () => {
+        const [mobiles, laptops, accessories, watches, tablets] = await Promise.all([
+            fetch('https://dummyjson.com/products/category/smartphones?limit=2').then(r => r.json()),
+            fetch('https://dummyjson.com/products/category/laptops?limit=1').then(r => r.json()),
+            fetch('https://dummyjson.com/products/category/mobile-accessories?limit=1').then(r => r.json()),
+            fetch('https://dummyjson.com/products/category/watches?limit=1').then(r => r.json()),
+            fetch('https://dummyjson.com/products/category/tablets?limit=1').then(r => r.json()),
+
+        ])
+
+        const merged = [
+            ...mobiles.products,
+            ...laptops.products,
+            ...accessories.products,
+            ...watches.products,
+            ...tablets.products
+        ]
+
+        setTechData(merged)
+    }
+
     useEffect(() => {
-        products(),
-        homeappliances();
-        kitchenappliances();
+        setloading(true);
+        const timer = setTimeout(() => {
+            ConsumerElectronics();
+            products();
+            homeappliances();
+            kitchenappliances();
+            setloading(false);
+        }, 10000);
+        return () => clearTimeout(timer);
     }, [])
     return (
         <div>
-            <Navbar input={input} setinput={setinput} onSearch={Allproducts}/>
+            <Navbar input={input} setinput={setinput} onSearch={Allproducts} />
             <header>
                 <Hero />
             </header>
-            <Productsection allData={filterproduct} frontData={frontData} home={home} kitcehb={kitcehb} />
+            <Productsection allData={filterproduct} frontData={frontData} home={home} kitcehb={kitcehb} TechData={TechData} loading={loading} />
         </div>
     )
 }
