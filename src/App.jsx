@@ -1,112 +1,73 @@
-import React, { useEffect, useState, useRef } from 'react';
-import './App.css'; // Import your new CSS file
+import { useEffect, useState } from 'react'
+import Navbar from './components/Navbar';
+import Hero from './components/Hero';
+import './components/App.css'
+import Productsection from './components/Productsection';
 
 const App = () => {
-  const [Input, setInput] = useState('');
-  const [allData, setAllData] = useState(null);
-  const [popularData, setPopularData] = useState(null);
-  const [selectedVideo, setSelectedVideo] = useState(null);
-  const playerRef = useRef(null);
+    const [input, setinput] = useState('');
+    const [loading, setloading] = useState(false);
+    const [Error, setError] = useState(false);
+    const [frontData, setfrontData] = useState(null);
+    const [home, sethome] = useState(null);
+    const [kitcehb, setkitcehb] = useState(null);
+    const [allData, setallData] = useState(null);
+    const Allproducts = async () => {
+        if (input === '') {
+            alert("please enter somthing in the field");
+        }
+        try {
+            const response = await fetch(`https://fakestoreapi.com/products`);
+            const result = await response.json();
+            if (!response.ok) {
+                throw new Error(result.message || "product not found!");
+            }
+            setallData(result);
+            setError(false);
+        } catch (err) {
+            setallData(null);
+            setError(err.message);
+        }
 
-  const API_KEY = "2ab07db4a3ffe6cb4c6684cbfbd2598e";
-
-  const fetchMovies = async () => {
-    const url = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}`;
-    const res = await fetch(url);
-    const result = await res.json();
-    setAllData(result);
-  };
-
-  const fetchPopularMovies = async () => {
-    const url = `https://api.themoviedb.org/3/trending/movie/day?api_key=${API_KEY}`;
-    const res = await fetch(url);
-    const result = await res.json();
-    setPopularData(result);
-  };
-
-  const handlePlay = async (id) => {
-    try {
-      const res = await fetch(`https://api.themoviedb.org/3/movie/${id}/videos?api_key=${API_KEY}`);
-      const data = await res.json();
-      const trailer = data.results.find(vid => vid.type === "Trailer" && vid.site === "YouTube");
-      
-      if (trailer) {
-        setSelectedVideo(trailer.key);
-        playerRef.current?.scrollIntoView({ behavior: 'smooth' });
-      } else {
-        alert("Trailer not available.");
-      }
-    } catch (err) {
-      console.error(err);
     }
-  };
-
-  useEffect(() => {
-    fetchMovies();
-    fetchPopularMovies();
-  }, []);
-
-  const filtersearch = allData?.results?.filter((Fmovie) => {
-    return Fmovie.title.toLowerCase().includes(Input.toLowerCase());
-  }) || [];
-
-  return (
-    <div className='container'>
-      <div className="top">
-        <h1>MovieBox</h1>
-        <input 
-          className="search-input"
-          type="text" 
-          placeholder="Search for a movie..."
-          value={Input} 
-          onChange={(e) => setInput(e.target.value)} 
-        />
-      </div>
-
-      <div ref={playerRef}>
-        {selectedVideo && (
-          <div className="video-theater">
-            <button className="close-btn" onClick={() => setSelectedVideo(null)}>Close X</button>
-            <iframe
-              width="100%"
-              height="500px"
-              src={`https://www.youtube.com/embed/${selectedVideo}?autoplay=1`}
-              title="Trailer"
-              frameBorder="0"
-              allow="autoplay; encrypted-media"
-              allowFullScreen
-            ></iframe>
-          </div>
-        )}
-      </div>
-
-      <div className="data-container">
-        {!Input && (
-          <>
-            <h2>Trending Now</h2>
-            <div className="popular-row">
-              {popularData?.results?.map((Pmovie) => (
-                <div className="movie-card" key={Pmovie.id} onClick={() => handlePlay(Pmovie.id)}>
-                  <img src={`https://image.tmdb.org/t/p/w500${Pmovie.poster_path}`} alt={Pmovie.title} />
-                  <p>{Pmovie.title}</p>
-                </div>
-              ))}
-            </div>
-          </>
-        )}
-
-        <h2>{Input ? `Results for "${Input}"` : "Discover"}</h2>
-        <div className="main-grid">
-          {(Input ? filtersearch : allData?.results)?.map((movie) => (
-            <div className="movie-card" key={movie.id} onClick={() => handlePlay(movie.id)}>
-              <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt={movie.title} />
-              <h4>{movie.title}</h4>
-            </div>
-          ))}
+    const filterproduct = allData?.filter((product) =>
+        product.title.toLowerCase().includes(input.toLowerCase())
+    );
+    const products = async () => {
+        const API = `https://fakestoreapi.com/products?limit=5`;
+        const response = await fetch(API);
+        const result = await response.json();
+        if (!response.ok) {
+            throw new Error(result.message || 'product not found');
+        }
+        setfrontData(result);
+        setError(false);
+    }
+    const homeappliances = async () => {
+        const response = await fetch(`https://dummyjson.com/products/category/furniture`);
+        const result = await response.json();
+        sethome(result.products);
+        setError(false);
+    }
+    const kitchenappliances = async () => {
+        const response = await fetch(`https://dummyjson.com/products/category/kitchen-accessories?limit=5`);
+        const result = await response.json();
+        setkitcehb(result.products);
+        setError(false);
+    }
+    useEffect(() => {
+        products(),
+        homeappliances();
+        kitchenappliances();
+    }, [])
+    return (
+        <div>
+            <Navbar input={input} setinput={setinput} onSearch={Allproducts}/>
+            <header>
+                <Hero />
+            </header>
+            <Productsection allData={filterproduct} frontData={frontData} home={home} kitcehb={kitcehb} />
         </div>
-      </div>
-    </div>
-  );
-};
-
-export default App;
+    )
+}
+export default App

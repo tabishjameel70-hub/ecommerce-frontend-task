@@ -1,8 +1,24 @@
 {
-  "name": "raect.js",
-  "private": true,
+  "name": "spotify",
   "version": "0.0.0",
+  "private": true,
+  "description": "this is spotify clone for my app",
+  "keywords": [
+    "spotify",
+    "music"
+  ],
+  "homepage": "https://github.com/tabishjameel70-hub/movie-web#readme",
+  "bugs": {
+    "url": "https://github.com/tabishjameel70-hub/movie-web/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tabishjameel70-hub/movie-web.git"
+  },
+  "license": "ISC",
+  "author": "tabish",
   "type": "module",
+  "main": "eslint.config.js",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -14,6 +30,7 @@
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-router-dom": "^7.13.0",
+    "slugify": "^1.6.9",
     "tailwindcss": "^4.1.17"
   },
   "devDependencies": {
