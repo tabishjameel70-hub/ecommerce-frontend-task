@@ -13,6 +13,8 @@ const App = () => {
     const [kitcehb, setkitcehb] = useState(null);
     const [allData, setallData] = useState(null);
     const [TechData, setTechData] = useState(null);
+    const [clothing, setclothing] = useState(null);
+    const [decore, setdecore] = useState(null);
 
     const Allproducts = async () => {
         if (input === '') {
@@ -58,6 +60,7 @@ const App = () => {
         setkitcehb(result.products);
         setError(false);
     }
+
     const ConsumerElectronics = async () => {
         const [mobiles, laptops, accessories, watches, tablets] = await Promise.all([
             fetch('https://dummyjson.com/products/category/smartphones?limit=2').then(r => r.json()),
@@ -67,28 +70,40 @@ const App = () => {
             fetch('https://dummyjson.com/products/category/tablets?limit=1').then(r => r.json()),
 
         ])
-
         const merged = [
             ...mobiles.products,
             ...laptops.products,
             ...accessories.products,
             ...watches.products,
-            ...tablets.products
+            ...tablets.products,
         ]
-
         setTechData(merged)
     }
-
+    const clothingappliances = async () => {
+        const [Mens, Women, bags] = await Promise.all([
+            fetch(`https://dummyjson.com/products/category/mens-shirts?limit=3`).then(r => r.json()),
+            fetch(`https://dummyjson.com/products/category/womens-dresses?limit=2`).then(r => r.json()),
+        ])
+        const merged = [
+            ...Mens.products,
+            ...Women.products,
+        ]
+        setclothing(merged);
+    }
+    const decorationappliances = async() => {
+        const res = await fetch(`https://dummyjson.com/products/category/home-decoration`)
+        const result = await res.json();
+        setdecore(result.products);
+    }
     useEffect(() => {
         setloading(true);
-        const timer = setTimeout(() => {
-            ConsumerElectronics();
-            products();
-            homeappliances();
-            kitchenappliances();
-            setloading(false);
-        }, 10000);
-        return () => clearTimeout(timer);
+        ConsumerElectronics();
+        products();
+        homeappliances();
+        kitchenappliances();
+        clothingappliances();
+        decorationappliances();
+        setloading(false);
     }, [])
     return (
         <div>
@@ -96,7 +111,7 @@ const App = () => {
             <header>
                 <Hero />
             </header>
-            <Productsection allData={filterproduct} frontData={frontData} home={home} kitcehb={kitcehb} TechData={TechData} loading={loading} />
+            <Productsection allData={filterproduct} frontData={frontData} home={home} kitcehb={kitcehb} TechData={TechData} loading={loading} clothing={clothing} decore={decore} />
         </div>
     )
 }
