@@ -1,13 +1,18 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
+import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
-import './components/App.css'
+import Home from './pages/Home';
+import SearchResult from './pages/searchresult.jsx';
+import './components/App.css';
 import Productsection from './components/Productsection';
 
-const App = () => {
+const Appcontent = () => {
+    const navigate = useNavigate()
     const [input, setinput] = useState('');
-    const [loading, setloading] = useState(false);
+    const [searching, setSearching] = useState(false)
     const [Error, setError] = useState(false);
+    const [loading, setloading] = useState(false)
     const [frontData, setfrontData] = useState(null);
     const [home, sethome] = useState(null);
     const [kitcehb, setkitcehb] = useState(null);
@@ -28,6 +33,8 @@ const App = () => {
                 throw new Error(result.message || "product not found!");
             }
             setallData(result);
+           navigate(`/search?q=${input}`);
+            setSearching(true);
             setError(false);
         } catch (err) {
             setallData(null);
@@ -80,7 +87,8 @@ const App = () => {
         setTechData(merged)
     }
     const clothingappliances = async () => {
-        const [Mens, Women, bags] = await Promise.all([
+        // ✅ Fix
+        const [Mens, Women] = await Promise.all([
             fetch(`https://dummyjson.com/products/category/mens-shirts?limit=3`).then(r => r.json()),
             fetch(`https://dummyjson.com/products/category/womens-dresses?limit=2`).then(r => r.json()),
         ])
@@ -90,29 +98,61 @@ const App = () => {
         ]
         setclothing(merged);
     }
-    const decorationappliances = async() => {
+    const decorationappliances = async () => {
         const res = await fetch(`https://dummyjson.com/products/category/home-decoration`)
         const result = await res.json();
         setdecore(result.products);
     }
     useEffect(() => {
-        setloading(true);
-        ConsumerElectronics();
-        products();
-        homeappliances();
-        kitchenappliances();
-        clothingappliances();
-        decorationappliances();
-        setloading(false);
+        const fetches = async () => {
+            setloading(true);
+            await Promise.all([
+                ConsumerElectronics(),
+                products(),
+                homeappliances(),
+                kitchenappliances(),
+                clothingappliances(),
+                decorationappliances(),
+            ])
+            setloading(false);
+        }
+        fetches();
     }, [])
     return (
-        <div>
+        <>
             <Navbar input={input} setinput={setinput} onSearch={Allproducts} />
-            <header>
-                <Hero />
-            </header>
-            <Productsection allData={filterproduct} frontData={frontData} home={home} kitcehb={kitcehb} TechData={TechData} loading={loading} clothing={clothing} decore={decore} />
-        </div>
+            <Routes>
+                <Route path="/" element={
+                    <>
+                        <Hero />
+                        <Productsection frontData={frontData} home={home} kitcehb={kitcehb} TechData={TechData} loading={loading} clothing={clothing} decore={decore} />
+                    </>
+                } />
+                <Route path="/search" element={
+                    <SearchResult
+                        filterproduct={filterproduct}
+                        input={input}
+                        frontData={frontData}
+                        home={home}
+                        kitcehb={kitcehb}
+                        TechData={TechData}
+                        loading={loading}
+                        clothing={clothing}
+                        decore={decore}
+                    />
+                } />
+            </Routes>
+        </>
+
+
     )
 }
+const App = () => {
+    return (
+        <BrowserRouter>
+            <Appcontent />
+        </BrowserRouter>
+    )
+}
+
 export default App

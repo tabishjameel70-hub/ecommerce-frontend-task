@@ -1,6 +1,6 @@
 import React from 'react'
 import logo from '../assets/logo.png'
-const Navbar =  ({ input, setinput, onSearch  }) => {
+const Navbar =  ({ input, setinput, onSearch }) => {
     return (
         <div>
             <nav className='navbar'>

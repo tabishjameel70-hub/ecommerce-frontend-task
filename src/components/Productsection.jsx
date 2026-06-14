@@ -3,6 +3,10 @@ import card1 from '../assets/furniture card.jpg'
 import card2 from '../assets/electronics crad.jpg'
 import card3 from '../assets/image 98.png'
 import frontCard from '../assets/Group 982.png'
+import b1 from '../assets/Mask group.png'
+import b2 from '../assets/Mask group (1).png'
+import b3 from '../assets/image 106.png'
+import b4 from '../assets/image 107 (1).png'
 const Productsection = ({ frontData, home, kitcehb, TechData, loading, clothing, decore }) => {
     return (
         <div>
@@ -120,7 +124,7 @@ const Productsection = ({ frontData, home, kitcehb, TechData, loading, clothing,
                             ))}
                         </div>
                     </div>
-                     <div className="front-product5">
+                    <div className="front-product5">
                         <div className="section5">
                             {decore?.map((p, index) => (
                                 <div className='box2' key={index}>
@@ -129,6 +133,31 @@ const Productsection = ({ frontData, home, kitcehb, TechData, loading, clothing,
                                     <p>${p.price}</p>
                                 </div>
                             ))}
+                        </div>
+                    </div>
+                    <div className="extraservice-card">
+                        <h4>Our Extra Services</h4>
+                        <div className='container'>
+                            <div className="b1">
+                                <img src={b1} alt="Mask group" />
+                                <i className="fa-solid fa-search-icon"></i>
+                                <h5>source from industry hubs!</h5>
+                            </div>
+                            <div className="b1">
+                                <img src={b2} alt="Mask group" />
+                                <i className="fa-solid fa-search-icon"></i>
+                                <h5>customize your products!</h5>
+                            </div>
+                            <div className="b1">
+                                <img src={b3} alt="Mask group" />
+                                <i className="fa-solid fa-search-icon"></i>
+                                <h5>fast reliable shipping by ocean or air!</h5>
+                            </div>
+                            <div className="b1">
+                                <img src={b4} alt="Mask group" />
+                                <i className="fa-solid fa-search-icon"></i>
+                                <h5>product monitoring and inspection!</h5>
+                            </div>
                         </div>
                     </div>
                 </div>

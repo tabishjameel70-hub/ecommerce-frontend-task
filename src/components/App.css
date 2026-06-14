@@ -8,8 +8,9 @@ header {
     width: 100%;
     display: flex;
     align-items: center;
-    border-bottom: 1px solid rgb(207, 207, 207);
+    border-bottom: 1px solid #cfcfcf;
     background-color: #fff;
+    position: fixed;
 }
 
 .navbar img {
@@ -127,6 +128,7 @@ select:open::picker-icon {
 }
 
 /* hero section */
+/* ................................................. */
 .hero-section {
     display: flex;
     justify-content: center;
@@ -171,13 +173,6 @@ select:open::picker-icon {
     cursor: pointer;
     border-radius: 5px;
 }
-
-/* .hero-img {
-    width: 80%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-} */
 
 .hero-img img {
     background-size: cover;
@@ -256,6 +251,7 @@ select:open::picker-icon {
 }
 
 /* section */
+/* ..................................... */
 section {
     height: auto;
     width: 100%;
@@ -309,8 +305,9 @@ section {
     gap: 8px;
     flex-direction: column;
 }
-.front-product5{
- display: flex;
+
+.front-product5 {
+    display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
@@ -326,12 +323,14 @@ section {
     gap: 12px;
 
 }
-.section5{
+
+.section5 {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 12px;
-} 
+}
+
 .box2 {
     height: 230px;
     width: 160px;
@@ -579,4 +578,57 @@ h2 {
     border: none;
     padding: 4px;
     border-radius: 3px;
+}
+/* .......................................................... */
+.extraservice-card {
+    height: 300px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.extraservice-card h4 {
+    font-size: 27px;
+    padding: 10px;
+}
+
+.extraservice-card .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.b1 {
+    height: 170px;
+    width: 250px;
+    margin: 10px;
+    padding: 5px;
+    border: 1px solid rgb(233, 233, 233);
+    background-color: white;
+    border-radius: 10px;
+}
+
+.b1 img {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 120px;
+    width: 250px;
+    object-fit: cover;
+}
+/* search-results ..........................*/
+.search-results{
+    min-height: 100vh;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas: 
+    "sidebar main"
+    ;
+}
+aside{
+   grid-area: "sidebar";
 }
