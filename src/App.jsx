@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Home from './pages/Home';
@@ -8,9 +8,7 @@ import './components/App.css';
 import Productsection from './components/Productsection';
 
 const Appcontent = () => {
-    const navigate = useNavigate()
     const [input, setinput] = useState('');
-    const [searching, setSearching] = useState(false)
     const [Error, setError] = useState(false);
     const [loading, setloading] = useState(false)
     const [frontData, setfrontData] = useState(null);
@@ -20,31 +18,21 @@ const Appcontent = () => {
     const [TechData, setTechData] = useState(null);
     const [clothing, setclothing] = useState(null);
     const [decore, setdecore] = useState(null);
-
     const Allproducts = async () => {
         if (input === '') {
-            alert("please enter somthing in the field");
+            alert("please enter something");
             return;
         }
         try {
-            const response = await fetch(`https://fakestoreapi.com/products`);
+            const response = await fetch(`https://dummyjson.com/products/search?q=${input}`)
             const result = await response.json();
-            if (!response.ok) {
-                throw new Error(result.message || "product not found!");
-            }
-            setallData(result);
-           navigate(`/search?q=${input}`);
-            setSearching(true);
+            setallData(result.products) // ✅ removed filter
             setError(false);
         } catch (err) {
             setallData(null);
             setError(err.message);
         }
-
     }
-    const filterproduct = allData?.filter((product) =>
-        product.title.toLowerCase().includes(input.toLowerCase())
-    );
     const products = async () => {
         const API = `https://fakestoreapi.com/products?limit=5`;
         const response = await fetch(API);
@@ -67,7 +55,6 @@ const Appcontent = () => {
         setkitcehb(result.products);
         setError(false);
     }
-
     const ConsumerElectronics = async () => {
         const [mobiles, laptops, accessories, watches, tablets] = await Promise.all([
             fetch('https://dummyjson.com/products/category/smartphones?limit=2').then(r => r.json()),
@@ -130,7 +117,7 @@ const Appcontent = () => {
                 } />
                 <Route path="/search" element={
                     <SearchResult
-                        filterproduct={filterproduct}
+                        filterproduct={allData}
                         input={input}
                         frontData={frontData}
                         home={home}
