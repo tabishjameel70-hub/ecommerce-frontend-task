@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
-import Hero from './components/Hero';
 import Home from './pages/Home';
 import SearchResult from './pages/searchresult.jsx';
 import './components/App.css';
 import Productsection from './components/Productsection';
-
+import Accessories from './pages/accessories.jsx';
+import Electronics from './pages/electronics.jsx';
+import smartPhones from './pages/Smartphones.jsx'
 const Appcontent = () => {
     const [input, setinput] = useState('');
     const [Error, setError] = useState(false);
@@ -18,6 +19,9 @@ const Appcontent = () => {
     const [TechData, setTechData] = useState(null);
     const [clothing, setclothing] = useState(null);
     const [decore, setdecore] = useState(null);
+    const [access, setaccess] = useState(null);
+    const [electronicsData, setelectronicsData] = useState(null)
+    const [smart, setsmart] = useState(null);
     const Allproducts = async () => {
         if (input === '') {
             alert("please enter something");
@@ -57,7 +61,7 @@ const Appcontent = () => {
     }
     const ConsumerElectronics = async () => {
         const [mobiles, laptops, accessories, watches, tablets] = await Promise.all([
-            fetch('https://dummyjson.com/products/category/smartphones?limit=2').then(r => r.json()),
+            fetch('https://dummyjson.com/products/category/smartphones?limit=1').then(r => r.json()),
             fetch('https://dummyjson.com/products/category/laptops?limit=1').then(r => r.json()),
             fetch('https://dummyjson.com/products/category/mobile-accessories?limit=1').then(r => r.json()),
             fetch('https://dummyjson.com/products/category/watches?limit=1').then(r => r.json()),
@@ -90,6 +94,36 @@ const Appcontent = () => {
         const result = await res.json();
         setdecore(result.products);
     }
+    const accessories = async () => {
+        const response = await fetch(`https://dummyjson.com/products/category/mobile-accessories?limit=20`);
+        const result = await response.json();
+        setaccess(result.products);
+        setError(false);
+    }
+    const electonics = async () => {
+        const [mobiles, laptops, accessories, watches, tablets] = await Promise.all([
+            fetch('https://dummyjson.com/products/category/smartphones?limit=1').then(r => r.json()),
+            fetch('https://dummyjson.com/products/category/laptops?limit=2').then(r => r.json()),
+            fetch('https://dummyjson.com/products/category/mobile-accessories?limit=1').then(r => r.json()),
+            fetch('https://dummyjson.com/products/category/watches?limit=2').then(r => r.json()),
+            fetch('https://dummyjson.com/products/category/tablets?limit=2').then(r => r.json()),
+
+        ])
+        const merged = [
+            ...mobiles.products,
+            ...laptops.products,
+            ...accessories.products,
+            ...watches.products,
+            ...tablets.products,
+        ]
+        setelectronicsData(merged);
+    }
+    const Smartphones = async () => {
+        const response = await fetch(`https://dummyjson.com/products/category/smartphones?limit=15`);
+        const result = await response.json();
+        setsmart(result.products);
+        setError(false);
+    }
     useEffect(() => {
         const fetches = async () => {
             setloading(true);
@@ -100,6 +134,9 @@ const Appcontent = () => {
                 kitchenappliances(),
                 clothingappliances(),
                 decorationappliances(),
+                accessories(),
+                electonics(),
+                Smartphones(),
             ])
             setloading(false);
         }
@@ -111,7 +148,6 @@ const Appcontent = () => {
             <Routes>
                 <Route path="/" element={
                     <>
-                        <Hero />
                         <Productsection frontData={frontData} home={home} kitcehb={kitcehb} TechData={TechData} loading={loading} clothing={clothing} decore={decore} />
                     </>
                 } />
@@ -126,12 +162,22 @@ const Appcontent = () => {
                         loading={loading}
                         clothing={clothing}
                         decore={decore}
+                        access={access}
+                        electronicsData={electronicsData}
+                        smart={smart}
                     />
+                } />
+                <Route path='/search' element={
+                    <Accessories access={access} />
+                } />
+                <Route path='/search' element={
+                    <Electronics electronicsData={electronicsData} />
+                } />
+                <Route path='/search' element={
+                  <Smartphones smart={smart} />
                 } />
             </Routes>
         </>
-
-
     )
 }
 const App = () => {

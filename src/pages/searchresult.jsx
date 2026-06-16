@@ -1,108 +1,134 @@
 import React, { useState } from 'react'
 import Productsection from '../components/Productsection'
-import logo from '../assets/logo.png'
-const SearchResult = ({ filterproduct, loading, input }) => {
+import Accessories from './accessories.jsx'
+import Electronics from './electronics.jsx'
+import Smartphones from './Smartphones.jsx'
+const SearchResult = ({ filterproduct, loading, input, access, electronicsData, smart }) => {
+    const [currentView, setcurrentView] = useState('Search');
     return (
         <>
-            <div className='search'>
-                <aside>
-                    <div className="category">
-                        <h2>category</h2>
-                        <p>mobile accesorry</p>
-                        <p>electonics</p>
-                        <p>smart phones</p>
-                        <p>modern tech</p>
-                    </div>
-                    <div className="brands">
+            {input ? (
+                <div className='search'>
+                    <aside>
                         <div className="category">
-                            <h2>Brands</h2>
-                            <label>
-                                <input type="checkbox" />
-                                samsung
-                            </label>
-                            <label>
-                                <input type="checkbox" />
-                                Apple
-                            </label>
-                            <label>
-                                <input type="checkbox" />
-                                Huawei
-                            </label>
-                            <label>
-                                <input type="checkbox" />
-                                Pocco
-                            </label>
-                            <label>
-                                <input type="checkbox" />
-                                Lenovo
-                            </label>
+                            <h3>category</h3>
+                            <button onClick={() => setcurrentView('Accessories')} >mobile accesorry</button>
+                            <button onClick={() => setcurrentView('Electronics')}>electronics</button>
+                           <button onClick={() => setcurrentView('Smartphones')}>smart phones</button>
                         </div>
-                    </div>
-                    <div className="features">
-                        <div className="category">
-                            <h2>Features</h2>
-                            <label>
-                                <input type="checkbox" />
-                                metallic
-                            </label>
-                            <label>
-                                <input type="checkbox" />
-                                platic cover
-                            </label>
-                            <label>
-                                <input type="checkbox" />
-                                8gb ram
-                            </label>
-                            <label>
-                                <input type="checkbox" />
-                                super power
-                            </label>
-                            <label>
-                                <input type="checkbox" />
-                                large memory
-                            </label>
-                        </div>
-                    </div>
-                    <div className="price">
-                        <input
-                            type="range"
-                            id="volume"
-                            min="0"
-                            max="100"
-                            step="1"
-                        />
-                        <div>
-                            <h6>Min</h6>
-                            <input type="text" placeholder='0' />
-                            <h6>Max</h6>
-                            <input type="text" placeholder='9999' />
-                        </div>
-                        <button>Apply</button>
-                    </div>
-                    <div className="condition"></div>
-                    <div className="ratings"></div>
-                </aside>
-                <main>
-                    {loading && <p>Loading...</p>}
-                    {filterproduct?.length === 0
-                        ? <p>No products found.</p>
-                        : filterproduct?.map((p, index) => (
-                            <div className="result" key={index}>
-                                <img src={p.thumbnail} alt={p.title} />
-                                <div className='result-info'>
-                                    <h2>{p.title}</h2>
-                                    <h3>${p.price}</h3>
-                                    <p>🏷️ {p.discountPercentage}% off</p>
-                                    <p>{'⭐'.repeat(Math.round(p.rating))}</p>
-                                    <p>{p.description}</p>
-                                </div>
+                        <div className="brands">
+                            <div className="category">
+                                <h3>Brands</h3>
+                                <label>
+                                    <input type="checkbox" />
+                                    samsung
+                                </label>
+                                <label>
+                                    <input type="checkbox" />
+                                    Apple
+                                </label>
+                                <label>
+                                    <input type="checkbox" />
+                                    Huawei
+                                </label>
+                                <label>
+                                    <input type="checkbox" />
+                                    Pocco
+                                </label>
+                                <label>
+                                    <input type="checkbox" />
+                                    Lenovo
+                                </label>
                             </div>
-                        ))}
-                </main>
-                <footer>
-                    this is footer
-                </footer>
-            </div>
+                        </div>
+                        <div className="features">
+                            <div className="category">
+                                <h3>Features</h3>
+                                <label>
+                                    <input type="checkbox" />
+                                    metallic
+                                </label>
+                                <label>
+                                    <input type="checkbox" />
+                                    platic cover
+                                </label>
+                                <label>
+                                    <input type="checkbox" />
+                                    8gb ram
+                                </label>
+                                <label>
+                                    <input type="checkbox" />
+                                    super power
+                                </label>
+                                <label>
+                                    <input type="checkbox" />
+                                    large memory
+                                </label>
+                            </div>
+                        </div>
+                        <div className="price">
+                            <h3>price range</h3>
+                            <input
+                                type="range"
+                                id="volume"
+                                min="0"
+                                max="100"
+                                step="1"
+                            />
+                            <div>
+                                <h6>Min</h6>
+                                <div>
+                                    <input type="text" placeholder='0' />
+                                    <h6>Max</h6>
+                                    <input type="text" placeholder='9999' />
+                                </div>
+
+                            </div>
+                            <button>Apply</button>
+                        </div>
+                        <div className="ratings">
+                            <div className="rating-filter">
+                                <p className="rating-title">Rating</p>
+
+                                {[5, 4, 3, 2, 1].map(rating => (
+                                    <label key={rating} className="rating-row">
+                                        <input type="checkbox" className="rating-checkbox" />
+                                        <span className="stars-filled">{"★".repeat(rating)}</span>
+                                        <span className="stars-empty">{"★".repeat(5 - rating)}</span>
+                                        <span className="rating-number">{rating}</span>
+                                    </label>
+                                ))}
+                            </div>
+                        </div>
+                    </aside>
+                    <main >
+                        {/* Conditional Rendering switches the content based on state */}
+                        {currentView === 'Search' && <div>
+                            {loading && <p>Loading...</p>}
+                            {filterproduct?.length === 0
+                                ? <p>No products found.</p>
+                                : filterproduct?.map((p, index) => (
+                                    <div className="result" key={index}>
+                                        <img src={p.thumbnail} alt={p.title} />
+                                        <div className='result-info'>
+                                            <h2>{p.title}</h2>
+                                            <h3>${p.price}</h3>
+                                            <p>🏷️ {p.discountPercentage}% off</p>
+                                            <p>{'⭐'.repeat(Math.round(p.rating))}</p>
+                                            <p>{p.description}</p>
+                                        </div>
+                                    </div>
+                                ))}
+                        </div>}
+                        {currentView === 'Accessories' && <Accessories access={access} />}
+                        {currentView === 'Electronics' && <Electronics electronicsData={electronicsData} />}
+                        {currentView === 'Smartphones' && <Smartphones smart={smart} />}
+                    </main>
+                    <footer>
+                        this is footer
+                    </footer>
+                </div>
+            ) : null}
         </>
     )
 }
