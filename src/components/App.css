@@ -49,16 +49,19 @@ header {
 }
 
 select {
-    appearance: base-select;
-    width: 100px;
-    padding: 4px;
-    height: 22px;
-    border-top-left-radius: 3px;
-    border-bottom-left-radius: 3px;
-    border-top-right-radius: 3px;
-    border: 1px solid rgb(172, 172, 172);
-    border-bottom-right-radius: 3px;
-    background-color: #fff;
+ width: 100px; /* Or change to width: auto; */
+  height: 22px;
+  padding: 4px;
+  font-size: 12px;
+  
+  /* Prevent text from spilling out horizontally */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap; 
+  
+  border: 1px solid rgb(172, 172, 172);
+  border-radius: 3px;
+  background-color: #fff;
 }
 
 ::picker(select) {
@@ -93,18 +96,18 @@ select:open::picker-icon {
 }
 
 .section-inquiry {
-     display: flex;
+       display: flex;
     justify-content: flex-start;
     align-items: center;
-    padding: 12px 12px;
+    padding: 13px 12px;
     gap: 20px;
-    height: 20px;
+    height: 23px;
     background-color: #fff;
-    border-bottom: 2px solid #ffffff;
+    /* border-bottom: 2px solid #ffffff; */
     position: absolute;
     top: 70px;
     width: 100%;
-    border: 1px solid;
+    border: 1px solid #e7e7e7;
 }
 
 .section-content {
@@ -630,14 +633,14 @@ h2 {
 /* search-results ..........................*/
 .search {
     min-height: calc(100vh - 70px);
-    margin-top: 70px;
     width: 100%;
     display: grid;
     grid-template-columns: 250px 1fr;
     grid-template-areas:
         "sidebar main"
         "footer footer";
-        
+        position: absolute;
+        top: 115px;
 }
 
 .search h3 {
@@ -667,6 +670,7 @@ h2 {
     justify-content: center;
     align-items: start;
     flex-direction: column;
+    height: 141px;
 }
 
 .price input {
@@ -909,4 +913,26 @@ footer {
   filter: grayscale(0%);
   background-color: #ffebeb;
   border-color: #ffb8b8;
+}
+/* /...................................... */
+.products{
+    height: 220px;
+    width: 950px;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    margin: 15px;
+}
+.products img{
+    height: 180px;
+    background-size: cover;
+}
+.products-info{
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    flex-direction: column;
+    height: 141px;
 }

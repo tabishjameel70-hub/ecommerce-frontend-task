@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, data } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import SearchResult from './pages/searchresult.jsx';
@@ -8,6 +8,10 @@ import Productsection from './components/Productsection';
 import Accessories from './pages/accessories.jsx';
 import Electronics from './pages/electronics.jsx';
 import smartPhones from './pages/Smartphones.jsx'
+import Oppo from './pages/Oppo.jsx'
+import Apple from './pages/Apple.jsx'
+import Realme from './pages/Realme.jsx';
+import Hero from './components/Hero.jsx';
 const Appcontent = () => {
     const [input, setinput] = useState('');
     const [Error, setError] = useState(false);
@@ -22,6 +26,9 @@ const Appcontent = () => {
     const [access, setaccess] = useState(null);
     const [electronicsData, setelectronicsData] = useState(null)
     const [smart, setsmart] = useState(null);
+    const [oppoData, setoppoData] = useState(null);
+    const [appleData, setappleData] = useState(null);
+    const [realmeData, setrealmeData] = useState(null);
     const Allproducts = async () => {
         if (input === '') {
             alert("please enter something");
@@ -123,6 +130,17 @@ const Appcontent = () => {
         const result = await response.json();
         setsmart(result.products);
         setError(false);
+
+    }
+    const toggleproducts = async () => {
+        const response = await fetch(`https://dummyjson.com/products/category/smartphones?limit=10`);
+        const result = await response.json();
+        const product1 = result.products.filter(p => p.brand === 'Oppo');
+        setoppoData(product1);
+        const product2 = result.products.filter(p => p.brand === "Apple");
+        setappleData(product2);
+        const product3 = result.products.filter(p => p.brand === "Realme");
+        setrealmeData(product3);
     }
     useEffect(() => {
         const fetches = async () => {
@@ -137,6 +155,7 @@ const Appcontent = () => {
                 accessories(),
                 electonics(),
                 Smartphones(),
+                toggleproducts(),
             ])
             setloading(false);
         }
@@ -165,6 +184,9 @@ const Appcontent = () => {
                         access={access}
                         electronicsData={electronicsData}
                         smart={smart}
+                        oppoData={oppoData}
+                        appleData={appleData}
+                       realmeData={realmeData}
                     />
                 } />
                 <Route path='/search' element={
@@ -174,7 +196,22 @@ const Appcontent = () => {
                     <Electronics electronicsData={electronicsData} />
                 } />
                 <Route path='/search' element={
-                  <Smartphones smart={smart} />
+                    <Smartphones smart={smart} />
+                } />
+                <Route path='/search' element={
+                    <Oppo 
+                        oppoData={oppoData}
+                    />
+                } />
+                <Route path='/search' element={
+                    <Apple
+                        appleData={appleData}
+                    />
+                } />
+                <Route path='/search' element={
+                    <Realme
+                       realmeData={realmeData}
+                    />
                 } />
             </Routes>
         </>

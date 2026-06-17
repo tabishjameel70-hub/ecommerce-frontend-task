@@ -3,7 +3,10 @@ import Productsection from '../components/Productsection'
 import Accessories from './accessories.jsx'
 import Electronics from './electronics.jsx'
 import Smartphones from './Smartphones.jsx'
-const SearchResult = ({ filterproduct, loading, input, access, electronicsData, smart }) => {
+import Oppo from './Oppo.jsx'
+import Apple from './Apple.jsx'
+import Realme from './Realme.jsx'
+const SearchResult = ({ filterproduct, loading, input, access, electronicsData, smart, oppoData, appleData, realmeData }) => {
     const [currentView, setcurrentView] = useState('Search');
     return (
         <>
@@ -14,30 +17,22 @@ const SearchResult = ({ filterproduct, loading, input, access, electronicsData, 
                             <h3>category</h3>
                             <button onClick={() => setcurrentView('Accessories')} >mobile accesorry</button>
                             <button onClick={() => setcurrentView('Electronics')}>electronics</button>
-                           <button onClick={() => setcurrentView('Smartphones')}>smart phones</button>
+                            <button onClick={() => setcurrentView('Smartphones')}>smart phones</button>
                         </div>
                         <div className="brands">
                             <div className="category">
                                 <h3>Brands</h3>
-                                <label>
+                                <label onClick={() => { return setcurrentView('Oppo') }}>
                                     <input type="checkbox" />
-                                    samsung
+                                    Oppo
                                 </label>
-                                <label>
+                                <label onClick={() => { return setcurrentView('Apple') }}>
                                     <input type="checkbox" />
                                     Apple
                                 </label>
-                                <label>
+                                <label onClick={() => { return setcurrentView('Realme') }}>
                                     <input type="checkbox" />
-                                    Huawei
-                                </label>
-                                <label>
-                                    <input type="checkbox" />
-                                    Pocco
-                                </label>
-                                <label>
-                                    <input type="checkbox" />
-                                    Lenovo
+                                    Realme
                                 </label>
                             </div>
                         </div>
@@ -123,6 +118,11 @@ const SearchResult = ({ filterproduct, loading, input, access, electronicsData, 
                         {currentView === 'Accessories' && <Accessories access={access} />}
                         {currentView === 'Electronics' && <Electronics electronicsData={electronicsData} />}
                         {currentView === 'Smartphones' && <Smartphones smart={smart} />}
+                        {currentView === 'Oppo' && <Oppo oppoData={oppoData} />}
+                        {currentView === 'Apple' && <Apple appleData={appleData} />}
+                        {currentView === 'Realme' && <Realme realmeData={realmeData} />}
+
+
                     </main>
                     <footer>
                         this is footer
