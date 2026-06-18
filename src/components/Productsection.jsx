@@ -1,4 +1,5 @@
-import React from 'react'
+import { useNavigate } from 'react-router-dom'
+import {useState } from 'react';
 import card1 from '../assets/furniture card.jpg'
 import card2 from '../assets/electronics crad.jpg'
 import card3 from '../assets/image 98.png'
@@ -7,7 +8,9 @@ import b1 from '../assets/Mask group.png'
 import b2 from '../assets/Mask group (1).png'
 import b3 from '../assets/image 106.png'
 import b4 from '../assets/image 107 (1).png'
-const Productsection = ({ frontData, home, kitcehb, TechData, loading, clothing, decore }) => {
+const Productsection = ({ frontData, home, kitcehb, TechData, loading, clothing, decore}) => {
+    const [currentview, setcurrentview] = useState('home');
+    const navigate = useNavigate();
     return (
         <div>
             <section>
@@ -21,8 +24,8 @@ const Productsection = ({ frontData, home, kitcehb, TechData, loading, clothing,
                         <div>
                             <div className='section1'>
                                 {frontData?.map((p, index) => (
-                                    <div className='box2' key={index}>
-                                        <img src={p.image} alt={p.title} />
+                                    <div className='box2'onClick={()=> navigate(`/productdetails/${p.id}`)}  key={index}>
+                                        <img src={p.thumbnail} alt={p.title} />
                                         <p>{p.title}</p>
                                         <p>{p.price}</p>
                                     </div>
@@ -40,7 +43,7 @@ const Productsection = ({ frontData, home, kitcehb, TechData, loading, clothing,
                         <div>
                             <div className="section3">
                                 {kitcehb?.map((p, index) => (
-                                    <div className="box3" key={index}>
+                                    <div className="box3" onClick={()=> navigate(`/productdetails/${p.id}`)}  key={index}>
                                         <img src={p.thumbnail} alt={p.title} />
                                         <p>{p.title}</p>
                                         <p>${p.price}</p>
@@ -50,7 +53,7 @@ const Productsection = ({ frontData, home, kitcehb, TechData, loading, clothing,
 
                             <div className='section2'>
                                 {home?.map((p, index) => (
-                                    <div className="box3" key={index}>
+                                    <div className="box3" onClick={()=> navigate(`/productdetails/${p.id}`)}  key={index}>
                                         <img src={p.thumbnail} alt={p.title} />
                                         <p>{p.title}</p>
                                         <p>${p.price}</p>
@@ -70,7 +73,7 @@ const Productsection = ({ frontData, home, kitcehb, TechData, loading, clothing,
                         <div>
                             <div className='section1'>
                                 {TechData?.map((p, index) => (
-                                    <div className='box2' key={index}>
+                                    <div className='box2' onClick={()=> navigate(`/productdetails/${p.id}`)}  key={index}>
                                         <img src={p.thumbnail} alt={p.title} />
                                         <p>{p.title}</p>
                                         <p>{p.price}</p>
@@ -116,7 +119,7 @@ const Productsection = ({ frontData, home, kitcehb, TechData, loading, clothing,
                         <h2>Recommend item</h2>
                         <div className="section4">
                             {clothing?.map((p, index) => (
-                                <div className='box2' key={index}>
+                                <div className='box2' onClick={()=> navigate(`/productdetails/${p.id}`)}  key={index}>
                                     <img src={p.thumbnail} alt={p.title} />
                                     <p>{p.title}</p>
                                     <p>${p.price}</p>
@@ -127,7 +130,7 @@ const Productsection = ({ frontData, home, kitcehb, TechData, loading, clothing,
                     <div className="front-product5">
                         <div className="section5">
                             {decore?.map((p, index) => (
-                                <div className='box2' key={index}>
+                                <div className='box2' onClick={()=> navigate(`/productdetails/${p.id}`)}  key={index}>
                                     <img src={p.thumbnail} alt={p.title} />
                                     <p>{p.title}</p>
                                     <p>${p.price}</p>

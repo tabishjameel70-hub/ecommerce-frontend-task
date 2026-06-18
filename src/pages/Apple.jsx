@@ -12,6 +12,7 @@ const Apple = ({ appleData }) => {
           <p>🏷️ {p.discountPercentage}% off</p>
           <p>{'⭐'.repeat(Math.round(p.rating))}</p>
           <p>{p.description}</p>
+          <p>{p.description}</p> 
           </div>
         </div>
       ))}

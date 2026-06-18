@@ -7,7 +7,7 @@ import Oppo from './Oppo.jsx'
 import Apple from './Apple.jsx'
 import Realme from './Realme.jsx'
 const SearchResult = ({ filterproduct, loading, input, access, electronicsData, smart, oppoData, appleData, realmeData }) => {
-    const [currentView, setcurrentView] = useState('Search');
+    const [currentView, setcurrentView] = useState('search')
     return (
         <>
             {input ? (
@@ -36,7 +36,7 @@ const SearchResult = ({ filterproduct, loading, input, access, electronicsData, 
                                 </label>
                             </div>
                         </div>
-                        <div className="features">
+                        {/* <div className="features">
                             <div className="category">
                                 <h3>Features</h3>
                                 <label>
@@ -60,24 +60,23 @@ const SearchResult = ({ filterproduct, loading, input, access, electronicsData, 
                                     large memory
                                 </label>
                             </div>
-                        </div>
+                        </div> */}
                         <div className="price">
                             <h3>price range</h3>
                             <input
                                 type="range"
                                 id="volume"
                                 min="0"
-                                max="100"
+                                max="1000"
                                 step="1"
                             />
                             <div>
                                 <h6>Min</h6>
                                 <div>
-                                    <input type="text" placeholder='0' />
+                                    <input type="text" placeholder='0'  />
                                     <h6>Max</h6>
-                                    <input type="text" placeholder='9999' />
+                                    <input type="text" placeholder='9999'  />
                                 </div>
-
                             </div>
                             <button>Apply</button>
                         </div>
@@ -98,7 +97,7 @@ const SearchResult = ({ filterproduct, loading, input, access, electronicsData, 
                     </aside>
                     <main >
                         {/* Conditional Rendering switches the content based on state */}
-                        {currentView === 'Search' && <div>
+                        {currentView === 'search' && <div>
                             {loading && <p>Loading...</p>}
                             {filterproduct?.length === 0
                                 ? <p>No products found.</p>
@@ -121,8 +120,6 @@ const SearchResult = ({ filterproduct, loading, input, access, electronicsData, 
                         {currentView === 'Oppo' && <Oppo oppoData={oppoData} />}
                         {currentView === 'Apple' && <Apple appleData={appleData} />}
                         {currentView === 'Realme' && <Realme realmeData={realmeData} />}
-
-
                     </main>
                     <footer>
                         this is footer

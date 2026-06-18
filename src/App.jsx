@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { BrowserRouter, Routes, Route, data } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, data, useNavigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import SearchResult from './pages/searchresult.jsx';
@@ -12,6 +12,7 @@ import Oppo from './pages/Oppo.jsx'
 import Apple from './pages/Apple.jsx'
 import Realme from './pages/Realme.jsx';
 import Hero from './components/Hero.jsx';
+import Productinfo from './pages/Productinfo.jsx'
 const Appcontent = () => {
     const [input, setinput] = useState('');
     const [Error, setError] = useState(false);
@@ -29,6 +30,11 @@ const Appcontent = () => {
     const [oppoData, setoppoData] = useState(null);
     const [appleData, setappleData] = useState(null);
     const [realmeData, setrealmeData] = useState(null);
+    const [filteredByPriceData, setFilteredByPriceData] = useState([]);
+    const [currentPrice, setcurrentPrice] = useState(0);
+    const [maxPrice, setmaxPrice] = useState(1000);
+    const [productDetails, setproductDetails] = useState(null);
+    const navigate = useNavigate()
     const Allproducts = async () => {
         if (input === '') {
             alert("please enter something");
@@ -37,7 +43,8 @@ const Appcontent = () => {
         try {
             const response = await fetch(`https://dummyjson.com/products/search?q=${input}`)
             const result = await response.json();
-            setallData(result.products) // ✅ removed filter
+            setallData(result.products);
+            navigate('/search'); 
             setError(false);
         } catch (err) {
             setallData(null);
@@ -45,13 +52,13 @@ const Appcontent = () => {
         }
     }
     const products = async () => {
-        const API = `https://fakestoreapi.com/products?limit=5`;
+        const API = `https://dummyjson.com/products?limit=5`;
         const response = await fetch(API);
         const result = await response.json();
         if (!response.ok) {
             throw new Error(result.message || 'product not found');
         }
-        setfrontData(result);
+        setfrontData(result.products);
         setError(false);
     }
     const homeappliances = async () => {
@@ -142,6 +149,12 @@ const Appcontent = () => {
         const product3 = result.products.filter(p => p.brand === "Realme");
         setrealmeData(product3);
     }
+    const filterproductprice = async () => {
+        const response = await fetch(`https://dummyjson.com/products/category/smartphones?limit=10`);
+        const result = await response.json();
+        const products = result.products.filter(p => Number(p.price) >= currentPrice && Number(p.price) <= maxPrice);
+        setFilteredByPriceData(products);
+    }
     useEffect(() => {
         const fetches = async () => {
             setloading(true);
@@ -156,6 +169,7 @@ const Appcontent = () => {
                 electonics(),
                 Smartphones(),
                 toggleproducts(),
+                filterproductprice(),
             ])
             setloading(false);
         }
@@ -166,9 +180,7 @@ const Appcontent = () => {
             <Navbar input={input} setinput={setinput} onSearch={Allproducts} />
             <Routes>
                 <Route path="/" element={
-                    <>
-                        <Productsection frontData={frontData} home={home} kitcehb={kitcehb} TechData={TechData} loading={loading} clothing={clothing} decore={decore} />
-                    </>
+                    <Productsection frontData={frontData} home={home} kitcehb={kitcehb} TechData={TechData} loading={loading} clothing={clothing} decore={decore} />
                 } />
                 <Route path="/search" element={
                     <SearchResult
@@ -186,7 +198,12 @@ const Appcontent = () => {
                         smart={smart}
                         oppoData={oppoData}
                         appleData={appleData}
-                       realmeData={realmeData}
+                        realmeData={realmeData}
+                        maxPrice={maxPrice}
+                        setcurrentPrice={setcurrentPrice}
+                        currentPrice={currentPrice}
+                        setmaxPrice={setmaxPrice}
+                        filteredByPriceData={filteredByPriceData}
                     />
                 } />
                 <Route path='/search' element={
@@ -199,7 +216,7 @@ const Appcontent = () => {
                     <Smartphones smart={smart} />
                 } />
                 <Route path='/search' element={
-                    <Oppo 
+                    <Oppo
                         oppoData={oppoData}
                     />
                 } />
@@ -210,7 +227,11 @@ const Appcontent = () => {
                 } />
                 <Route path='/search' element={
                     <Realme
-                       realmeData={realmeData}
+                        realmeData={realmeData}
+                    />
+                } />
+                 <Route path="/productdetails/:id" element={
+                    <Productinfo
                     />
                 } />
             </Routes>

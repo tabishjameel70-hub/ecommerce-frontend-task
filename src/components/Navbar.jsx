@@ -2,13 +2,15 @@ import React from 'react'
 import logo from '../assets/logo.png'
 import Hero from './Hero.jsx'
 import SearchResult from '../pages/searchresult.jsx'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
+
 const Navbar = ({ input, setinput, onSearch }) => {
     const Location = useLocation();
+    const usenav = useNavigate()
     return (
         <header>
             <nav className='navbar'>
-                <img src={logo} alt="logo" />
+                <img onClick={()=> usenav('/')} src={logo} alt="logo" />
                 <div className='nav-functions'>
                     <input type="text" value={input} onChange={(e) => { setinput(e.target.value) }} />
                     <select name="category">
@@ -166,7 +168,8 @@ const Navbar = ({ input, setinput, onSearch }) => {
                     </div>
                 </div>
             </nav>
-            {Location.pathname !== '/search' && <Hero />}
+       {Location.pathname === '/' && <Hero />}
+
         </header>
     )
 }
