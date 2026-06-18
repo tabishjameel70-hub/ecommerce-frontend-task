@@ -1,45 +1,31 @@
-🛒 ShopApp — E-Commerce Frontend
-A fully functional multi-page e-commerce web app built with React + Vite, consuming real product data from the DummyJSON API. Built as an internship task at DevelopersHub Corporation
+# 🛒 E-Commerce Front-End Store
 
-🔍 Quick Links to my Code
-App Entry & Routing (App.jsx)
-Homepage Products (Productsection.jsx)
-Navbar (Navbar.jsx)
-Search Results (searchresult.jsx)
-Product Detail Page (Productinfo.jsx)
-Smartphones Page (Smartphones.jsx)
-Styles (App.css)
+A responsive front-end product store dashboard built with React and CSS Grid/Flexbox, modeled directly from Figma designs.
 
-🚀 Features
-Fetches live product data from DummyJSON API
-Multi-page app with React Router — no full page reloads
-Product detail page — click any product to see full info fetched by ID
-Search functionality — search products by name with live API results
-Brand filtering — filter smartphones by Oppo, Apple, Realme
-Category sidebar — switch between Accessories, Electronics, Smartphones
-Price range slider — filter products by min/max price
-Star rating filter UI
-Multiple product sections on homepage — furniture, kitchen, tech, clothing, decoration
-Supplier inquiry form with category and quantity selector
-Fully responsive layout..
+---
 
-🗂️ Project Structure
-src/
-├── components/
-│   ├── App.jsx           # Root component, all data fetching, routing
-│   ├── App.css           # Global styles
-│   ├── Navbar.jsx        # Top navigation with search bar
-│   ├── Hero.jsx          # Homepage hero section
-│   └── Productsection.jsx # Homepage product grid sections
-├── pages/
-│   ├── Home.jsx
-│   ├── searchresult.jsx  # Search results with sidebar filters
-│   ├── Productinfo.jsx   # Single product detail page
-│   ├── Accessories.jsx   # Mobile accessories category
-│   ├── Electronics.jsx   # Electronics category
-│   ├── Smartphones.jsx   # Smartphones category
-│   ├── Oppo.jsx          # Oppo brand filter
-│   ├── Apple.jsx         # Apple brand filter
-│   └── Realme.jsx        # Realme brand filter
-└── assets/
-    └── (images & icons)
+## 🔍 Quick Links to my Code
+
+* 🧠 **The Core Logic:** [`src/App.jsx`](https://github.com/tabishjameel70-hub/ecommerce-frontend-task/blob/main/src/App.jsx)
+* 📱 **Smartphones Grid:** [`src/components/Smartphones.jsx`](https://github.com/tabishjameel70-hub/ecommerce-frontend-task/blob/main/src/components/Smartphones.jsx)
+* 💻 **Electronics Grid:** [`src/components/Electronics.jsx`](https://github.com/tabishjameel70-hub/ecommerce-frontend-task/blob/main/src/components/Electronics.jsx)
+* 🎨 **The Global Styles:** [`src/index.css`](https://github.com/tabishjameel70-hub/ecommerce-frontend-task/blob/main/src/index.css)
+
+---
+
+## 🚀 Features
+
+* **Live API Fetching:** Loads real-time product categories from DummyJSON.
+* **Figma-to-Code Layout:** Exact CSS Grid layouts for product showcases.
+* **Smart Wishlist:** Interactive wishlist toggle (`likedProducts`) using object states.
+* **Dynamic Layouts:** Automatically hides the Hero section on detail pages.
+
+---
+
+## 🏗️ Quick Start
+
+```bash
+git clone [https://github.com/tabishjameel70-hub/ecommerce-frontend-task.git](https://github.com/tabishjameel70-hub/ecommerce-frontend-task.git)
+cd ecommerce-frontend-task
+npm install
+npm run dev
