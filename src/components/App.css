@@ -669,14 +669,17 @@ h2 {
 }
 
 .result {
-  height: 220px;
-  width: 950px;
-  border: none;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: white;
-  margin: 10px;
+      height: 220px;
+    width: 950px;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    margin: 10px;
+    color: #4e535a;
+    border-radius: 10px;
+
 }
 
 .result img {
@@ -699,15 +702,14 @@ h2 {
 main {
   grid-area: main;
   overflow-y: auto;
-  background-color: #cfcfcf;
-  background-color: #cfcfcf;
+  background-color: #ededed;
 
 
 }
 
 aside {
   grid-area: sidebar;
-  background-color: rgb(240, 240, 240);
+  background-color: rgb(249 249 249);
   top: 117px;
   height: calc(100vh - 117px);
   align-self: start;
@@ -1419,9 +1421,11 @@ footer {
 /* ........................................ */
 .clothes-page-container {
   max-width: 1200px;
-  margin: 40px auto;
+  margin: 10px;
   padding: 0 20px;
   font-family: sans-serif;
+  position: absolute;
+    top: 140px;
   
 }
 
@@ -1590,9 +1594,11 @@ footer {
 /* HomeDecor.css */
 .flex-page-container {
   max-width: 1200px;
-  margin: 30px auto;
+  margin: 10px ;
   padding: 0 15px;
   font-family: sans-serif;
+  position: absolute;
+  top: 120px;
 }
 
 .section-title {
