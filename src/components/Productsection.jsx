@@ -1,5 +1,4 @@
 import { useNavigate } from 'react-router-dom'
-import {useState } from 'react';
 import card1 from '../assets/furniture card.jpg'
 import card2 from '../assets/electronics crad.jpg'
 import card3 from '../assets/image 98.png'
@@ -8,8 +7,8 @@ import b1 from '../assets/Mask group.png'
 import b2 from '../assets/Mask group (1).png'
 import b3 from '../assets/image 106.png'
 import b4 from '../assets/image 107 (1).png'
-const Productsection = ({ frontData, home, kitcehb, TechData, loading, clothing, decore}) => {
-    const [currentview, setcurrentview] = useState('home');
+const Productsection = ({ frontData, home, kitcehb, TechData,  clothing, decore}) => {
+
     const navigate = useNavigate();
     return (
         <div>

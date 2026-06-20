@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, {  useState } from 'react';
 function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [login, setlogin] = useState(null);
 
     const handleSubmit = (e) => {
         e.preventDefault();
