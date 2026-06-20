@@ -13,7 +13,7 @@ import Apple from './pages/Apple.jsx'
 import Realme from './pages/Realme.jsx';
 import Hero from './components/Hero.jsx';
 import Productinfo from './pages/Productinfo.jsx'
-import Login from './pages/login.jsx';
+import Login from './pages/Login.jsx';
 import Automobiles from './pages/Automobiles.jsx';
 import Clothes from './pages/clothesandwear.jsx'
 import HomeDecorPage from './pages/Homeanddecore.jsx'
