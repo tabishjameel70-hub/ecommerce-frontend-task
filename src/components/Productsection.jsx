@@ -27,7 +27,7 @@ const Productsection = ({ frontData, home, kitcehb, TechData, loading, clothing,
                                     <div className='box2'onClick={()=> navigate(`/productdetails/${p.id}`)}  key={index}>
                                         <img src={p.thumbnail} alt={p.title} />
                                         <p>{p.title}</p>
-                                        <p>{p.price}</p>
+                                        <p>${p.price}</p>
                                     </div>
                                 ))}
                             </div>

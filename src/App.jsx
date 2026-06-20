@@ -13,6 +13,15 @@ import Apple from './pages/Apple.jsx'
 import Realme from './pages/Realme.jsx';
 import Hero from './components/Hero.jsx';
 import Productinfo from './pages/Productinfo.jsx'
+import Login from './pages/login.jsx';
+import Automobiles from './pages/Automobiles.jsx';
+import Clothes from './pages/clothesandwear.jsx'
+import HomeDecorPage from './pages/Homeanddecore.jsx'
+import ComputerTechPage from './pages/Computertechpage.jsx';
+import ToolsEquipmentPage from './pages/ToolsEquipmentPage.jsx';
+import SportsOutdoorsPage from './pages/SportsOutdoorsPage.jsx';
+import AnimalPetsPage from './pages/AnimalPetsPage.jsx';
+import MachineryToolsPage from './pages/MachineryToolsPage.jsx';
 const Appcontent = () => {
     const [input, setinput] = useState('');
     const [Error, setError] = useState(false);
@@ -34,6 +43,15 @@ const Appcontent = () => {
     const [currentPrice, setcurrentPrice] = useState(0);
     const [maxPrice, setmaxPrice] = useState(1000);
     const [productDetails, setproductDetails] = useState(null);
+    const [automobile, setautomobile] = useState(null);
+    const [clothesandWear, setclothesandWear] = useState(null);
+    const [homeDecorData, setHomeDecorData] = useState([]);
+    const [techData, setTechDataList] = useState([]);
+    const [toolsData, setToolsData] = useState([]);
+    const [sportsData, setSportsData] = useState([]);
+    const [animalsData, setAnimalsData] = useState([]);
+    const [machineryData, setMachineryData] = useState([]);
+    const [moreCategoryData, setMoreCategoryData] = useState([]);
     const navigate = useNavigate()
     const Allproducts = async () => {
         if (input === '') {
@@ -44,7 +62,7 @@ const Appcontent = () => {
             const response = await fetch(`https://dummyjson.com/products/search?q=${input}`)
             const result = await response.json();
             setallData(result.products);
-            navigate('/search'); 
+            navigate('/search');
             setError(false);
         } catch (err) {
             setallData(null);
@@ -155,6 +173,80 @@ const Appcontent = () => {
         const products = result.products.filter(p => Number(p.price) >= currentPrice && Number(p.price) <= maxPrice);
         setFilteredByPriceData(products);
     }
+    const Automobile = async () => {
+        const response = await fetch(`https://dummyjson.com/products/category/vehicle`);
+        const result = await response.json();
+        setautomobile(result.products);
+        setError(null);
+    }
+    const clotheswear = async () => {
+        const [Mens, Women] = await Promise.all([
+            fetch(`https://dummyjson.com/products/category/mens-shirts?limit=3`).then(r => r.json()),
+            fetch(`https://dummyjson.com/products/category/womens-dresses?limit=2`).then(r => r.json()),
+        ])
+        const merged = [
+            ...Mens.products,
+            ...Women.products,
+        ]
+      setclothesandWear(merged);
+    }
+    const homeAndDecor = async () => {
+        try {
+            const res = await fetch('https://dummyjson.com/products/category/home-decoration');
+            const data = await res.json();
+            setHomeDecorData(data.products || data);
+        } catch (err) { console.error(err); }
+    };
+
+    const computerAndTech = async () => {
+        try {
+            const res = await fetch('https://dummyjson.com/products/category/laptops');
+            const data = await res.json();
+            setTechData(data.products || data);
+        } catch (err) { console.error(err); }
+    };
+
+    const toolsEquipments = async () => {
+        try {
+            // DummyJSON does not have a tools category; pulling mobile-accessories as a safe data fallback
+            const res = await fetch('https://dummyjson.com/products/category/mobile-accessories');
+            const data = await res.json();
+            setToolsData(data.products || data);
+        } catch (err) { console.error(err); }
+    };
+
+    const sportsAndOutdoors = async () => {
+        try {
+            const res = await fetch('https://dummyjson.com/products/category/sports-accessories');
+            const data = await res.json();
+            setSportsData(data.products || data);
+        } catch (err) { console.error(err); }
+    };
+
+    const animalAndPets = async () => {
+        try {
+            // Fallback endpoint to ensure items display on the screen
+            const res = await fetch('https://dummyjson.com/products/category/groceries');
+            const data = await res.json();
+            setAnimalsData(data.products || data);
+        } catch (err) { console.error(err); }
+    };
+
+    const machineryTools = async () => {
+        try {
+            const res = await fetch('https://dummyjson.com/products/category/lighting');
+            const data = await res.json();
+            setMachineryData(data.products || data);
+        } catch (err) { console.error(err); }
+    };
+
+    const moreCategory = async () => {
+        try {
+            const res = await fetch('https://dummyjson.com/products/category/sunglasses');
+            const data = await res.json();
+            setMoreCategoryData(data.products || data);
+        } catch (err) { console.error(err); }
+    };
     useEffect(() => {
         const fetches = async () => {
             setloading(true);
@@ -170,6 +262,15 @@ const Appcontent = () => {
                 Smartphones(),
                 toggleproducts(),
                 filterproductprice(),
+                Automobile(),
+             clotheswear(),
+                homeAndDecor(),
+                computerAndTech(),
+                toolsEquipments(),
+                sportsAndOutdoors(),
+                animalAndPets(),
+                machineryTools(),
+                moreCategory()
             ])
             setloading(false);
         }
@@ -230,10 +331,36 @@ const Appcontent = () => {
                         realmeData={realmeData}
                     />
                 } />
-                 <Route path="/productdetails/:id" element={
+                <Route path="/productdetails/:id" element={
                     <Productinfo
                     />
                 } />
+                <Route path="/login" element={
+                    <Login
+                    />
+                } />
+                <Route path="/Automobiles" element={
+                    <Automobiles
+                        automobile={automobile}
+                    />
+                } />
+                <Route path="/clothes" element={
+                    <Clothes
+                        clothesandWear={clothesandWear}
+                    />
+                } />
+                <Route path="/home-decor" 
+                element={<HomeDecorPage products={homeDecorData} loading={loading} />} />
+                <Route path="/computer-tech" 
+                element={<ComputerTechPage products={techData} loading={loading} />} />
+                <Route path="/tools-equipment" 
+                element={<ToolsEquipmentPage products={toolsData} loading={loading} />} />
+                <Route path="/sports-outdoors" 
+                element={<SportsOutdoorsPage products={sportsData} loading={loading} />} />
+                <Route path="/animal-pets" 
+                element={<AnimalPetsPage products={animalsData} loading={loading} />} />
+                <Route path="/machinery-tools" 
+                element={<MachineryToolsPage products={machineryData} loading={loading} />} />
             </Routes>
         </>
     )
