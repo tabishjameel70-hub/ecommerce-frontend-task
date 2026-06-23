@@ -17,7 +17,7 @@ A responsive front-end product store dashboard built with React and CSS Grid/Fle
 * 💻 **Electronics Grid:** [`src/components/Electronics.jsx`](https://github.com/tabishjameel70-hub/ecommerce-frontend-task/blob/main/src/components/Electronics.jsx)
 
 ### 🎨 Stylesheets
-* 💅 **The Global Styles:** [`src/index.css`](https://github.com/tabishjameel70-hub/ecommerce-frontend-task/blob/main/src/index.css)
+* 💅 **The Global Styles:** [`src/index.css`](https://github.com/tabishjameel70-hub/ecommerce-frontend-task/blob/main/src/App.css)
 
 ---
 
