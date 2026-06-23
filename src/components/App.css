@@ -140,7 +140,7 @@ select:open::picker-icon {
   display: flex;
   justify-content: center;
   height: 370px;
-  width: calc(100% - 270px);
+  width: 1000px;
   background-color: #fff;
   border-radius: 10px;
   border: none;
@@ -175,7 +175,7 @@ select:open::picker-icon {
   line-height: 1.2;
   color: #8d8d8ddd;
   overflow: visible;
-  ;
+  
 }
 
 .hero-menu h5:hover {
@@ -188,7 +188,7 @@ select:open::picker-icon {
   background-position: 50%;
   background-repeat: no-repeat;
   background-size: cover;
-  width: 580px;
+  width: 600px;
   height: 355px;
   padding: 14px;
   border-radius: 25px;
@@ -1714,4 +1714,61 @@ footer {
     flex: 1 1 100%;
     max-width: 100%;
   }
+}
+
+@media(max-width: 1000px){
+  .nav-functions input{
+    width: 250px;
+    height: 16px;
+    padding: 3px 3px;
+    border: 1px solid rgb(155, 155, 155);
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+  }
+  .navbar ul{
+     width: 40%;
+         display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  .navbar ul li{
+    padding: 12px 12px;
+    list-style: none;
+    color: #a5a5a5;
+    font-size: 13px;
+    margin-right: 24px;
+    font-family: 'Poppins', sans-serif;
+  }
+  .nav-functions{
+    width: 48%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+@media (max-width:1000px) {
+   .hero-section{
+     display: flex;
+    justify-content: center;
+    height: 370px;
+    width: calc(100% - 270px);
+    background-color: #fff;
+    border-radius: 10px;
+    border: none;
+    align-items: center;
+    padding: 20px;
+    margin-left: 100px;
+    margin-right: 100px;
+    margin-top: 130px;
+    width: 900px;
+   }
+   .hero-img img{
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 480px;
+    height: 355px;
+    padding: 14px;
+    border-radius: 25px;
+   }
 }
