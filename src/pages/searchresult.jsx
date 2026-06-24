@@ -6,8 +6,10 @@ import Smartphones from './Smartphones.jsx'
 import Oppo from './Oppo.jsx'
 import Apple from './Apple.jsx'
 import Realme from './Realme.jsx'
+import { useNavigate } from 'react-router-dom'
 const SearchResult = ({ filterproduct, loading, input, access, electronicsData, smart, oppoData, appleData, realmeData }) => {
     const [currentView, setcurrentView] = useState('search')
+   const navigate = useNavigate();
     return (
         <>
             {input ? (
@@ -73,9 +75,9 @@ const SearchResult = ({ filterproduct, loading, input, access, electronicsData, 
                             <div>
                                 <h6>Min</h6>
                                 <div>
-                                    <input type="text" placeholder='0'  />
+                                    <input type="text" placeholder='0' />
                                     <h6>Max</h6>
-                                    <input type="text" placeholder='9999'  />
+                                    <input type="text" placeholder='9999' />
                                 </div>
                             </div>
                             <button>Apply</button>

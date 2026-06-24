@@ -1,6 +1,6 @@
 header {
-  height: 420px;
-  width: 100%;
+    height: 550px;
+    width: 100%;
 }
 
 .navbar {
@@ -85,11 +85,11 @@ select:open::picker-icon {
 }
 
 .navbar ul li {
-  padding: 18px 18px;
+  padding: 15px 15px;
   list-style: none;
   color: #a5a5a5;
-  font-size: 14px;
-  margin-right: 25px;
+  font-size: 13px;
+  margin-right: 10px;
   font-family: 'Poppins', sans-serif;
 }
 
@@ -175,7 +175,7 @@ select:open::picker-icon {
   line-height: 1.2;
   color: #8d8d8ddd;
   overflow: visible;
-  
+
 }
 
 .hero-menu h5:hover {
@@ -669,16 +669,16 @@ h2 {
 }
 
 .result {
-      height: 220px;
-    width: 950px;
-    border: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: white;
-    margin: 10px;
-    color: #4e535a;
-    border-radius: 10px;
+  height: 220px;
+  width: 950px;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  margin: 10px;
+  color: #4e535a;
+  border-radius: 10px;
 
 }
 
@@ -1425,8 +1425,8 @@ footer {
   padding: 0 20px;
   font-family: sans-serif;
   position: absolute;
-    top: 140px;
-  
+  top: 140px;
+
 }
 
 .page-main-heading {
@@ -1594,7 +1594,7 @@ footer {
 /* HomeDecor.css */
 .flex-page-container {
   max-width: 1200px;
-  margin: 10px ;
+  margin: 10px;
   padding: 0 15px;
   font-family: sans-serif;
   position: absolute;
@@ -1716,8 +1716,8 @@ footer {
   }
 }
 
-@media(max-width: 1000px){
-  .nav-functions input{
+@media(max-width: 1000px) {
+  .nav-functions input {
     width: 250px;
     height: 16px;
     padding: 3px 3px;
@@ -1725,13 +1725,15 @@ footer {
     border-top-left-radius: 3px;
     border-bottom-left-radius: 3px;
   }
-  .navbar ul{
-     width: 40%;
-         display: flex;
+
+  .navbar ul {
+    width: 40%;
+    display: flex;
     justify-content: flex-end;
     align-items: center;
   }
-  .navbar ul li{
+
+  .navbar ul li {
     padding: 12px 12px;
     list-style: none;
     color: #a5a5a5;
@@ -1739,16 +1741,18 @@ footer {
     margin-right: 24px;
     font-family: 'Poppins', sans-serif;
   }
-  .nav-functions{
+
+  .nav-functions {
     width: 48%;
     display: flex;
     justify-content: center;
     align-items: center;
   }
 }
+
 @media (max-width:1000px) {
-   .hero-section{
-     display: flex;
+  .hero-section {
+    display: flex;
     justify-content: center;
     height: 370px;
     width: calc(100% - 270px);
@@ -1761,8 +1765,9 @@ footer {
     margin-right: 100px;
     margin-top: 130px;
     width: 900px;
-   }
-   .hero-img img{
+  }
+
+  .hero-img img {
     background-position: 50%;
     background-repeat: no-repeat;
     background-size: cover;
@@ -1770,5 +1775,103 @@ footer {
     height: 355px;
     padding: 14px;
     border-radius: 25px;
-   }
+  }
+}
+
+@media (max-width:984px) {
+  /* Hide the actual checkbox completely */
+  #menu-toggle {
+    display: none;
+  }
+
+  .navbar ul {
+    display: none; /* Hidden by default */
+    justify-content: start;
+    align-items: flex-start;
+    width: 200px;
+    flex-direction: column;
+    background-color: rgb(218, 218, 218);
+    z-index: 1;
+    position: fixed;
+    height: 100vh;
+    top: 0;
+    right: 0;
+    gap: 50px;
+    padding: 10px 10px;
+  }
+
+  .nav-functions {
+    width: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center
+  }
+
+  .nav-functions input {
+    width: 400px;
+    height: 16px;
+    padding: 3px 3px;
+    border: 1px solid rgb(155, 155, 155);
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+  }
+
+  /* FIX: When the hidden checkbox is checked, find the sibling navbar and show the ul */
+  #menu-toggle:checked ~ .navbar ul {
+    display: flex;
+  }
+}
+
+/*  ...............
+*................................*/
+.offer-conatiner {
+  overflow-y: auto;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  background-color: #e7e7e7;
+  position: absolute;
+  width: 100%;
+  top: 122px;
+}
+
+.result {
+  background-color: #ffffff;
+  border: 1px solid #e3e8ee;
+  border-radius: 6px;
+  padding: 20px;
+  width: 210px;
+  height: 250px;
+  border-radius: 10px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-family: system-ui, -apple-system, sans-serif;
+  transition: box-shadow 0.2s ease-in-out;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+
+.result img {
+  height: 110px;
+  background-size: cover;
+}
+
+h2 {
+  font-size: 14px;
+  padding: 4px;
+  color: black;
+}
+
+.result p {
+  font-size: 11px;
+}
+
+.result h3 {
+  font-size: 16px;
 }

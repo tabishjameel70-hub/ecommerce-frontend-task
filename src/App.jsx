@@ -22,6 +22,9 @@ import ToolsEquipmentPage from './pages/ToolsEquipmentPage.jsx';
 import SportsOutdoorsPage from './pages/SportsOutdoorsPage.jsx';
 import AnimalPetsPage from './pages/AnimalPetsPage.jsx';
 import MachineryToolsPage from './pages/MachineryToolsPage.jsx';
+import Hotoffers from './pages/Hotoffers.jsx';
+import Productinfo2 from './pages/productinfo2.jsx';
+import Productinfo3 from './pages/productinfo3.jsx';
 const Appcontent = () => {
     const [input, setinput] = useState('');
     const [Error, setError] = useState(false);
@@ -52,7 +55,8 @@ const Appcontent = () => {
     const [animalsData, setAnimalsData] = useState([]);
     const [machineryData, setMachineryData] = useState([]);
     const [moreCategoryData, setMoreCategoryData] = useState([]);
-    const navigate = useNavigate()
+    const [offers, setoffers] = useState(null);
+    const navigate = useNavigate();
     const Allproducts = async () => {
         if (input === '') {
             alert("please enter something");
@@ -247,6 +251,13 @@ const Appcontent = () => {
             setMoreCategoryData(data.products || data);
         } catch (err) { console.error(err); }
     };
+    const hoffers = async () => {
+        const response = await fetch(`https://dummyjson.com/products`);
+        const result = await response.json();
+        setoffers(result.products);
+        setError(false);
+    }
+    
     useEffect(() => {
         const fetches = async () => {
             setloading(true);
@@ -270,7 +281,8 @@ const Appcontent = () => {
                 sportsAndOutdoors(),
                 animalAndPets(),
                 machineryTools(),
-                moreCategory()
+                moreCategory(),
+                hoffers(),
             ])
             setloading(false);
         }
@@ -361,6 +373,24 @@ const Appcontent = () => {
                 element={<AnimalPetsPage products={animalsData} loading={loading} />} />
                 <Route path="/machinery-tools" 
                 element={<MachineryToolsPage products={machineryData} loading={loading} />} />
+                <Route path="/Hotoffers" element={
+                    <Hotoffers
+                        offers={offers}
+                    />
+                } />
+                 <Route path="/productdeta" element={
+                    <Hotoffers
+                        offers={offers}
+                    />
+                } />     
+                 <Route path="/productdetails2/:id" element={
+                    <Productinfo2
+                    />
+                } />
+                <Route path="/productdetails3/:id" element={
+                    <Productinfo3
+                    />
+                } />
             </Routes>
         </>
     )

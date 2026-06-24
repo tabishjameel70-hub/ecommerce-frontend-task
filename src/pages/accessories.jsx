@@ -1,20 +1,25 @@
 import {useState} from 'react'
-
+import { useNavigate } from 'react-router-dom'
 const Accessories = ({ access }) => {
     const [likedProducts, setLikedProducts] = useState({});
     const toggleLike = (index) => {
+        e.stopPropagation();
         setLikedProducts((prev) => ({
             ...prev,
             [index]: !prev[index], // flips true/false for just this item
         }));
     };
+      const navigate = useNavigate();
     return (
         <div className="container">
             {access?.map((p, index) => {
                 const isLiked = !!likedProducts[index];
+                  
                 return (
-                    <div className="product-card" key={index}>
-
+                    <div className="product-card" key={index} onClick={() => navigate(`/productdetails2/${p?.id}`)}>
+                               <div>
+                                <button onClick={() => navigate(`/search`)}>back</button>
+                            </div>
                         {/* 1. Floating Wishlist Button */}
                         <button
                             className={`wishlist-btn ${isLiked ? 'liked' : ''}`}
@@ -25,7 +30,7 @@ const Accessories = ({ access }) => {
 
                         {/* 2. Image Area */}
                         <div className="image-container">
-                            <img src={p.thumbnail} alt={p.title} />
+                            <img src={p?.thumbnail} alt={p?.title} />
                         </div>
 
                         {/* 3. Product Info */}
@@ -33,21 +38,21 @@ const Accessories = ({ access }) => {
 
                             {/* Pricing Row */}
                             <div className="price-row">
-                                <span className="current-price">${p.price}</span>
-                                {p.discountPercentage && (
-                                    <span className="discount-tag">🏷️ {p.discountPercentage}% off</span>
+                                <span className="current-price">${p?.price}</span>
+                                {p?.discountPercentage && (
+                                    <span className="discount-tag">🏷️ {p?.discountPercentage}% off</span>
                                 )}
                             </div>
 
                             {/* Rating Row using your clever string repeat logic! */}
                             <div className="rating-row">
-                                <span>{'⭐'.repeat(Math.round(p.rating))}</span>
-                                <span className="rating-num"> ({p.rating})</span>
+                                <span>{'⭐'.repeat(Math.round(p?.rating))}</span>
+                                <span className="rating-num"> ({p?.rating})</span>
                             </div>
 
                             {/* Title & Description */}
-                            <h2 className="product-title">{p.title}</h2>
-                            <p className="product-desc">{p.description}</p>
+                            <h2 className="product-title">{p?.title}</h2>
+                            <p className="product-desc">{p?.description}</p>
                         </div>
 
                     </div>

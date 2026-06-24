@@ -1,22 +1,24 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 const Electronics = ({ electronicsData }) => {
   // Keeps track of which index has been liked
   const [likedProducts, setLikedProducts] = useState({});
 
   const toggleLike = (index) => {
+    e.stopPropagation();
     setLikedProducts((prev) => ({
       ...prev,
       [index]: !prev[index], 
     }));
   };
-
+  const navigate = useNavigate();
   return (
     <div className="container">
       {electronicsData?.map((p, index) => {
         const isLiked = !!likedProducts[index];
 
         return (
-          <div className="cccc product-card" key={index}>
+          <div className="cccc product-card" key={index} onClick={()=> navigate(`/productdetails3/${p.id}`)}>
             
             {/* 1. Floating Wishlist Button */}
             <button
