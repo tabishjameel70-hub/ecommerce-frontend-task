@@ -39,7 +39,7 @@ const Productsection = ({ frontData, home, kitcehb, TechData,  clothing, decore}
                             <h3>Home and decore</h3>
                             <button>source now</button>
                         </div>
-                        <div>
+                        <div className='ccc-extra2'>
                             <div className="section3">
                                 {kitcehb?.map((p, index) => (
                                     <div className="box3" onClick={()=> navigate(`/productdetails/${p.id}`)}  key={index}>

@@ -16,25 +16,29 @@ const Hero = () => {
                     <h5 onClick={() => navigate(`/animal-pets`)}>animal and pets</h5>
                     <h5 onClick={() => navigate(`/machinery-tools`)}>machinery tools</h5>
                 </div>
-                <div className="hero-img">
-                    <img src={Heroimage} alt="hero" />
-                </div>
-                <div className='hero-imp'>
-                    <div className="login">
-                        <div className="login-content">
-                            <li><i className="fa-solid fa-circle-user"></i></li>
-                            <p>hi, user Lets get started!</p>
+                <div className='ccc-extra'>
+
+                    <div className="hero-img">
+                        <img src={Heroimage} alt="hero" />
+                    </div>
+                    <div className='hero-imp'>
+                        <div className="login">
+                            <div className="login-content">
+                                <li><i className="fa-solid fa-circle-user"></i></li>
+                            </div>
+                            <button>join now</button>
+                            <button onClick={() => navigate(`/Login`)}>login</button>
                         </div>
-                        <button>join now</button>
-                        <button onClick={() => navigate(`/Login`)}>login</button>
+                        <div className="offers">
+                            <p>Get US $10 off with a new supplier</p>
+                        </div>
+                        <div className="quotes">
+                            <p>send a quotes with supplier prefrences</p>
+                        </div>
                     </div>
-                    <div className="offers">
-                        <p>Get US $10 off with a new supplier</p>
-                    </div>
-                    <div className="quotes">
-                        <p>send a quotes with supplier prefrences</p>
-                    </div>
+
                 </div>
+
 
             </div>
         </div>

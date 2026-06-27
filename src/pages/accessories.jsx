@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 const Accessories = ({ access }) => {
     const [likedProducts, setLikedProducts] = useState({});
@@ -9,17 +9,17 @@ const Accessories = ({ access }) => {
             [index]: !prev[index], // flips true/false for just this item
         }));
     };
-      const navigate = useNavigate();
+    const navigate = useNavigate();
     return (
         <div className="container">
             {access?.map((p, index) => {
                 const isLiked = !!likedProducts[index];
-                  
+
                 return (
                     <div className="product-card" key={index} onClick={() => navigate(`/productdetails2/${p?.id}`)}>
-                               <div>
-                                <button onClick={() => navigate(`/search`)}>back</button>
-                            </div>
+                        <div>
+                            <button onClick={() => navigate(`/search`)}>back</button>
+                        </div>
                         {/* 1. Floating Wishlist Button */}
                         <button
                             className={`wishlist-btn ${isLiked ? 'liked' : ''}`}

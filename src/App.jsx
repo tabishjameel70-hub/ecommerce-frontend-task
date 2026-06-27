@@ -25,6 +25,7 @@ import MachineryToolsPage from './pages/MachineryToolsPage.jsx';
 import Hotoffers from './pages/Hotoffers.jsx';
 import Productinfo2 from './pages/productinfo2.jsx';
 import Productinfo3 from './pages/productinfo3.jsx';
+import Productinfo4 from './pages/productinfo4.jsx';
 const Appcontent = () => {
     const [input, setinput] = useState('');
     const [Error, setError] = useState(false);
@@ -391,6 +392,11 @@ const Appcontent = () => {
                     <Productinfo3
                     />
                 } />
+                  <Route path="/productdetails4/:id" element={
+                    <Productinfo4
+                    />
+                } />
+                
             </Routes>
         </>
     )
