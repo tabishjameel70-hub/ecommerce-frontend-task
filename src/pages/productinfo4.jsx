@@ -1,99 +1,91 @@
-import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import React, { useContext } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { ProductContext } from "./productContext"; // Adjust this path if needed
 
-const Productinfo4 = () => {
-    const {id} = useParams();
-    const [product4, setproduct4] = useState(null);
-    const result = async() => {
-        const response = await fetch(`https://dummyjson.com/products`);
-        const result = await response.json();
-        setproduct4(result.products);
-    }
-    useEffect(()=>{
-        result();
-    },[id]);
-   if (!product4) return <p>Loading...</p>
+const ProductInfo = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  
+  // Destructuring offers and your cart update state from context
+  const { offers, setProduct2 } = useContext(ProductContext);
+
+  if (!offers) {
+    return (
+      <div className="loading-container">
+        <div className="spinner"></div>
+        <p>Loading product details...</p>
+      </div>
+    );
+  }
+
+  // Find the clicked product by ID
+  const product = offers.find((item) => item.id === Number(id));
+
+  if (!product) {
+    return (
+      <div className="error-container">
+        <h2>Oops! Product not found.</h2>
+        <button className="back-btn" onClick={() => navigate("/")}>Go Home</button>
+      </div>
+    );
+  }
+
+  // Adds product to cart context and routes straight to the Cart
+  const handleAddToCart = () => {
+    setProduct2(product); 
+    navigate("/Cart");
+  };
+
   return (
-   <div className="contain">
-            {/* COLUMN 1: Gallery Area */}
-            <div className="gallery-column">
-                <div className="main-img">
-                    <img src={product4.thumbnail} alt={product4.title} />
-                </div>
-                <div className="extra-images">
-                    {product4.images?.map((img, index) => (
-                        <img key={index} src={img} alt={`view-${index}`} />
-                    ))}
-                </div>
-            </div>
+    <div className="page-wrapper">
+      <div className="product-container">
+        {/* Left: Product Image */}
+        <div className="image-section">
+          <img 
+            src={product.thumbnail} 
+            alt={product.title} 
+            className="product-image" 
+          />
+        </div>
 
-            {/* COLUMN 2: Core Info Area */}
-            <div className="info-column">
-                <div className="info">
-                    <span className="stock-badge">✓ In stock</span>
-                    <h2 className="detail-title">{product4.title}</h2>
+        {/* Right: Product Details */}
+        <div className="details-section">
+          <span className="category">{product.category}</span>
+          <h1 className="product-title">{product.title}</h1>
+          
+          <div className="rating-row">
+            <span className="stars">★ ★ ★ ★ ☆</span>
+            <span className="reviews">({product.reviews?.length || 32} reviews)</span>
+          </div>
 
-                    <div className="rating-row">
-                        <span className="stars">{'⭐'.repeat(Math.round(product4.rating))}</span>
-                        <span className="rating-text"> {product4.rating} • 32 reviews</span>
-                    </div>
+          <hr className="divider" />
 
-                    {/* Pricing Banner Box */}
-                    <div className="price-banner">
-                        <div className="price-block">
-                            <h4>${product4.price}</h4>
-                            <p>50-100 pcs</p>
-                        </div>
-                        <div className="price-block highlight">
-                            <h4>🏷️ {product4.discountPercentage}% off</h4>
-                            <p>100+ pcs</p>
-                        </div>
-                    </div>
+          <div className="price-row">
+            <span className="price">${product.price}</span>
+            {product.discountPercentage && (
+              <span className="discount">{product.discountPercentage}% OFF</span>
+            )}
+          </div>
 
-                    {/* Added description right below the main info segment */}
-                    <p className="product-main-desc">{product4.description}</p>
-                </div>
+          {/* Description */}
+          <p className="description">{product.description}</p>
 
-                {/* Technical Data Rows */}
-                <div className="extra-info">
-                    <div className="info-row">
-                        <span className="label">Price:</span>
-                        <span className="value negotiation">Negotiable</span>
-                    </div>
-                    <div className="info-row">
-                        <span className="label">Protection:</span>
-                        <span className="value">Refund policy</span>
-                    </div>
-                    <div className="info-row">
-                        <span className="label">Warranty:</span>
-                        <span className="value">2 years full warranty</span>
-                    </div>
-                </div>
-            </div>
+          {/* Meta Specifications */}
+          <div className="meta-info">
+            <p><strong>Brand:</strong> {product.brand || "Generic"}</p>
+            <p><strong>Stock:</strong> <span className="stock-text">{product.stock > 0 ? "✔ In Stock" : "Out of Stock"}</span></p>
+            <p><strong>Shipping:</strong> {product.shippingInformation || "Free shipping within 2 days"}</p>
+            <p><strong>Warranty:</strong> {product.warrantyInformation || "1 Year local warranty"}</p>
+          </div>
 
-            {/* COLUMN 3: Supplier Sidebar Card */}
-            <div className="supplier-column">
-                <div className="supplier-card">
-                    <div className="supplier-header">
-                        <div className="supplier-avatar">R</div>
-                        <div>
-                            <h5>Supplier</h5>
-                            <p>Guanjoi Trading LLC</p>
-                        </div>
-                    </div>
-                    <hr />
-                    <div className="supplier-details">
-                        <p>🇩🇪 Germany, Berlin</p>
-                        <p>🛡️ Verified Seller</p>
-                        <p>🌐 Worldwide Shipping</p>
-                    </div>
-                    <button className="btn-inquiry">Send inquiry</button>
-                    <button className="btn-profile">Seller's profile</button>
-                </div>
-            </div>
-
+          {/* Add to Cart Button */}
+          <button className="add-to-cart-btn" onClick={handleAddToCart}>
+            Add to Cart & View
+          </button>
+        </div>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default Productinfo4
+export default ProductInfo;

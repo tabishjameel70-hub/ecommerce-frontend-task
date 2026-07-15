@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route, data, useNavigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
@@ -12,7 +12,7 @@ import Oppo from './pages/Oppo.jsx'
 import Apple from './pages/Apple.jsx'
 import Realme from './pages/Realme.jsx';
 import Hero from './components/Hero.jsx';
-import Productinfo from './pages/Productinfo.jsx'
+// import Productinfo from './pages/Productinfo.jsx'
 import Login from './pages/Login.jsx';
 import Automobiles from './pages/Automobiles.jsx';
 import Clothes from './pages/clothesandwear.jsx'
@@ -26,6 +26,11 @@ import Hotoffers from './pages/Hotoffers.jsx';
 import Productinfo2 from './pages/productinfo2.jsx';
 import Productinfo3 from './pages/productinfo3.jsx';
 import Productinfo4 from './pages/productinfo4.jsx';
+import Cart from './pages/cart.jsx'
+import UpdateProduct, { ProductContext }  from './pages/productContext.jsx';
+import Purchasing from './pages/purchasing.jsx'
+// import UpdateContext from './pages/frontContext.jsx';
+import Cart2 from './pages/Cart2.jsx';
 const Appcontent = () => {
     const [input, setinput] = useState('');
     const [Error, setError] = useState(false);
@@ -56,7 +61,8 @@ const Appcontent = () => {
     const [animalsData, setAnimalsData] = useState([]);
     const [machineryData, setMachineryData] = useState([]);
     const [moreCategoryData, setMoreCategoryData] = useState([]);
-    const [offers, setoffers] = useState(null);
+    const {offers,setOffers} = useContext(ProductContext);
+
     const navigate = useNavigate();
     const Allproducts = async () => {
         if (input === '') {
@@ -193,7 +199,7 @@ const Appcontent = () => {
             ...Mens.products,
             ...Women.products,
         ]
-      setclothesandWear(merged);
+        setclothesandWear(merged);
     }
     const homeAndDecor = async () => {
         try {
@@ -255,10 +261,9 @@ const Appcontent = () => {
     const hoffers = async () => {
         const response = await fetch(`https://dummyjson.com/products`);
         const result = await response.json();
-        setoffers(result.products);
+        setOffers(result.products);
         setError(false);
     }
-    
     useEffect(() => {
         const fetches = async () => {
             setloading(true);
@@ -275,7 +280,7 @@ const Appcontent = () => {
                 toggleproducts(),
                 filterproductprice(),
                 Automobile(),
-             clotheswear(),
+                clotheswear(),
                 homeAndDecor(),
                 computerAndTech(),
                 toolsEquipments(),
@@ -344,10 +349,10 @@ const Appcontent = () => {
                         realmeData={realmeData}
                     />
                 } />
-                <Route path="/productdetails/:id" element={
+                {/* <Route path="/productdetails/:id" element={
                     <Productinfo
                     />
-                } />
+                } /> */}
                 <Route path="/login" element={
                     <Login
                     />
@@ -362,50 +367,62 @@ const Appcontent = () => {
                         clothesandWear={clothesandWear}
                     />
                 } />
-                <Route path="/home-decor" 
-                element={<HomeDecorPage products={homeDecorData} loading={loading} />} />
-                <Route path="/computer-tech" 
-                element={<ComputerTechPage products={techData} loading={loading} />} />
-                <Route path="/tools-equipment" 
-                element={<ToolsEquipmentPage products={toolsData} loading={loading} />} />
-                <Route path="/sports-outdoors" 
-                element={<SportsOutdoorsPage products={sportsData} loading={loading} />} />
-                <Route path="/animal-pets" 
-                element={<AnimalPetsPage products={animalsData} loading={loading} />} />
-                <Route path="/machinery-tools" 
-                element={<MachineryToolsPage products={machineryData} loading={loading} />} />
+                <Route path="/home-decor"
+                    element={<HomeDecorPage products={homeDecorData} loading={loading} />} />
+                <Route path="/computer-tech"
+                    element={<ComputerTechPage products={techData} loading={loading} />} />
+                <Route path="/tools-equipment"
+                    element={<ToolsEquipmentPage products={toolsData} loading={loading} />} />
+                <Route path="/sports-outdoors"
+                    element={<SportsOutdoorsPage products={sportsData} loading={loading} />} />
+                <Route path="/animal-pets"
+                    element={<AnimalPetsPage products={animalsData} loading={loading} />} />
+                <Route path="/machinery-tools"
+                    element={<MachineryToolsPage products={machineryData} loading={loading} />} />
                 <Route path="/Hotoffers" element={
                     <Hotoffers
                         offers={offers}
                     />
                 } />
-                 <Route path="/productdeta" element={
+                <Route path="/productdeta" element={
                     <Hotoffers
                         offers={offers}
                     />
-                } />     
-                 <Route path="/productdetails2/:id" element={
+                } />
+                <Route path="/productdetails2/:id" element={
                     <Productinfo2
+                        offers={offers}
                     />
                 } />
                 <Route path="/productdetails3/:id" element={
                     <Productinfo3
                     />
                 } />
-                  <Route path="/productdetails4/:id" element={
+                <Route path="/productdetails4/:id" element={
                     <Productinfo4
+
                     />
                 } />
-                
+                <Route path="/Cart" element={
+                    <Cart />
+                } />
+                <Route path='/purchasing' element={
+                    <Purchasing />
+                }
+                />
+                <Route path='/cart2' element={<Cart2 />} />
             </Routes>
         </>
     )
 }
 const App = () => {
     return (
-        <BrowserRouter>
-            <Appcontent />
-        </BrowserRouter>
+        <UpdateProduct>
+         <BrowserRouter>
+         <Appcontent />
+         </BrowserRouter>
+        </UpdateProduct>
+
     )
 }
 

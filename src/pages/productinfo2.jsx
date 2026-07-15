@@ -1,9 +1,11 @@
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 
-const Productinfo2 = () => {
+const Productinfo2 = (offers) => {
     const { id } = useParams();
-    const [product2, setProduct2] = useState(null)
+    const [product2, setProduct2] = useState([]);
+    const [Cart, setCart] = useState(null);
+    const navigate = useNavigate();
     useEffect(() => {
         fetch(`https://dummyjson.com/products/category/mobile-accessories`)
             .then(res => res.json())
@@ -85,7 +87,7 @@ const Productinfo2 = () => {
                         <p>🌐 Worldwide Shipping</p>
                     </div>
                     <button className="btn-inquiry">Send inquiry</button>
-                    <button className="btn-profile">Seller's profile</button>
+                    <button className="btn-profile" onClick={()=> navigate('/Cart')}>Add to Cart</button>
                 </div>
             </div>
 

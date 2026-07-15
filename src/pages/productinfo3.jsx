@@ -1,9 +1,11 @@
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate} from 'react-router-dom'
 import { useState, useEffect } from 'react'
 
 const Productinfo2 = () => {
     const { id } = useParams();
     const [product3, setProduct3] = useState(null);
+    const navigate = useNavigate();
+
     const results = async()=> {
         const [mobiles, laptops, accessories, watches, tablets] = await Promise.all([
             fetch('https://dummyjson.com/products/category/smartphones?limit=1').then(r => r.json()),
@@ -101,7 +103,7 @@ const Productinfo2 = () => {
                         <p>🌐 Worldwide Shipping</p>
                     </div>
                     <button className="btn-inquiry">Send inquiry</button>
-                    <button className="btn-profile">Seller's profile</button>
+                    <button className="btn-profile" onClick={()=> navigate('/Cart')}>Add to Cart</button>
                 </div>
             </div>
 

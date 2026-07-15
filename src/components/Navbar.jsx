@@ -51,7 +51,7 @@ const Navbar = ({ input, setinput, onSearch }) => {
                         <i className="fa-solid fa-heart"></i>
                         <p>Order</p>
                     </li>
-                    <li>
+                    <li onClick={()=> usenav('/Cart')}>
                         <i className="fa-solid fa-cart-arrow-down"></i>
                         <p>my orders</p>
                     </li>
